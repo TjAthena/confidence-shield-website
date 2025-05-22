@@ -40,17 +40,17 @@ const HeroSection = () => {
                   <span className="text-sm font-medium text-gray-500">I am interested in:</span>
                 </div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                  <Link to="/products/life-protection">
+                  <Link to="/products">
                     <Button variant="outline" className="w-full text-sm justify-start">
                       Life Protection
                     </Button>
                   </Link>
-                  <Link to="/products/financial-security">
+                  <Link to="/products">
                     <Button variant="outline" className="w-full text-sm justify-start">
                       Financial Security
                     </Button>
                   </Link>
-                  <Link to="/products/financial-freedom">
+                  <Link to="/products">
                     <Button variant="outline" className="w-full text-sm justify-start">
                       Financial Freedom
                     </Button>

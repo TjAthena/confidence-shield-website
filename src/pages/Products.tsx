@@ -2,69 +2,73 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Shield, HeartPulse, Car, Landmark, BarChart3 } from "lucide-react";
 
 const Products = () => {
   const categories = [
     {
       id: "life-protection",
-      title: "Life Protection",
+      title: "1. Life Protection",
+      icon: <Shield className="h-8 w-8 text-[#001F3F]" />,
       description: "Secure your family's financial future with comprehensive life insurance solutions.",
       subcategories: [
         {
           id: "term-insurance",
-          title: "Term Insurance",
+          title: "1.1 Term Insurance",
           description: "Pure life coverage at affordable premiums to protect your family's financial future.",
           providers: ["HDFC Life", "Max Life", "Bajaj Allianz", "ICICI Prudential", "LIC"],
-          link: "/products/life-protection/term-insurance",
+          link: "/term-insurance",
         },
         {
           id: "return-of-premium",
-          title: "Return of Premium Plans",
+          title: "1.2 Return of Premium Plans",
           description: "Life coverage with return of all premiums at the end of policy term.",
           providers: ["HDFC Life", "Max Life", "ICICI Prudential", "LIC", "SBI Life"],
-          link: "/products/life-protection/return-of-premium",
+          link: "/return-of-premium",
         },
       ],
     },
     {
       id: "financial-security",
-      title: "Financial Security",
+      title: "2. Financial Security",
+      icon: <HeartPulse className="h-8 w-8 text-[#00BFFF]" />,
       description: "Protect yourself against unexpected medical expenses and vehicle damages.",
       subcategories: [
         {
           id: "health-insurance",
-          title: "Health Insurance",
+          title: "2.1 Health Insurance",
           description: "Comprehensive coverage for hospitalization, treatments, and medical emergencies.",
           providers: ["Navi", "Reliance", "HDFC ERGO", "ICICI Lombard", "Star Health"],
-          link: "/products/financial-security/health-insurance",
+          link: "/health-insurance",
         },
         {
           id: "vehicle-insurance",
-          title: "Vehicle Insurance",
+          title: "2.2 Vehicle Insurance",
           description: "Protect your vehicle against damage, theft, and third-party liabilities.",
           providers: ["HDFC ERGO", "ICICI Lombard", "Bajaj Allianz", "Reliance General"],
-          link: "/products/financial-security/vehicle-insurance",
+          link: "/vehicle-insurance",
         },
       ],
     },
     {
       id: "financial-freedom",
-      title: "Financial Freedom",
+      title: "3. Financial Freedom",
+      icon: <BarChart3 className="h-8 w-8 text-[#00C853]" />,
       description: "Build wealth and achieve long-term financial goals with our investment solutions.",
       subcategories: [
         {
           id: "fixed-deposits",
-          title: "FD, RD & Deposits",
+          title: "3.1 Fixed Deposits",
           description: "Secure fixed returns with deposits from trusted financial institutions.",
           providers: ["Bajaj Finance", "Shriram Finance", "Sundaram Finance"],
-          link: "/products/financial-freedom/fixed-deposits",
+          link: "/fixed-deposits",
         },
         {
           id: "mutual-funds",
-          title: "Mutual Funds",
+          title: "3.2 Mutual Funds",
           description: "Professionally managed investment portfolios across various asset classes.",
           providers: ["HDFC AMC", "SBI Mutual Fund", "Axis Mutual Fund", "ICICI Prudential AMC"],
-          link: "/products/financial-freedom/mutual-funds",
+          link: "/mutual-funds",
         },
       ],
     },
@@ -75,7 +79,7 @@ const Products = () => {
       <section className="py-16 bg-gray-50">
         <div className="container px-4 mx-auto">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="mb-4 text-4xl font-bold text-[#001F3F]">Our Products</h1>
+            <h1 className="mb-4 text-4xl font-bold text-[#001F3F]">Our Financial Products</h1>
             <p className="mb-6 text-lg text-gray-600">
               Explore our comprehensive range of financial protection and investment solutions.
             </p>
@@ -86,9 +90,12 @@ const Products = () => {
       <section className="py-16 bg-white">
         <div className="container px-4 mx-auto">
           {categories.map((category) => (
-            <div key={category.id} className="mb-16">
+            <div key={category.id} className="mb-16 border-b pb-8 last:border-b-0">
               <div className="mb-8">
-                <h2 className="text-3xl font-semibold text-[#001F3F]">{category.title}</h2>
+                <div className="flex items-center gap-3 mb-2">
+                  {category.icon}
+                  <h2 className="text-3xl font-semibold text-[#001F3F]">{category.title}</h2>
+                </div>
                 <p className="mt-2 text-gray-600">{category.description}</p>
               </div>
 
