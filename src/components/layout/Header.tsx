@@ -72,11 +72,11 @@ const Header = () => {
                     Financial Products
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[600px] grid-cols-3 gap-3 p-4">
+                    <div className="w-[220px] p-4">
                       {financialProducts.map((category) => (
-                        <div key={category.title} className="space-y-2">
-                          <h4 className="font-medium text-sm">{category.title}</h4>
-                          <ul className="space-y-1">
+                        <div key={category.title} className="mb-4">
+                          <h4 className="font-medium text-sm mb-2">{category.title}</h4>
+                          <ul className="space-y-2">
                             {category.items.map((item) => (
                               <li key={item.name}>
                                 <NavigationMenuLink asChild>
