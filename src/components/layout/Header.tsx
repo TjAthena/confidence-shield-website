@@ -50,18 +50,18 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-[#001F3F]">
+          <span className="text-2xl font-bold bg-gradient-to-r from-[#001F3F] to-[#00BFFF] text-transparent bg-clip-text">
             Confidence
-            <span className="text-[#00BFFF]">Financial</span>
+            <span className="font-bold">Financial</span>
           </span>
         </Link>
 
         {!isMobile ? (
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="font-medium text-gray-700 hover:text-[#00BFFF]">
+            <Link to="/" className="font-medium text-gray-700 hover:text-[#00BFFF] transition-colors">
               Home
             </Link>
-            <Link to="/about" className="font-medium text-gray-700 hover:text-[#00BFFF]">
+            <Link to="/about" className="font-medium text-gray-700 hover:text-[#00BFFF] transition-colors">
               About Us
             </Link>
             
@@ -72,17 +72,17 @@ const Header = () => {
                     Financial Products
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[220px] p-4">
+                    <div className="w-[220px] p-4 bg-white shadow-lg rounded-md">
                       {financialProducts.map((category) => (
                         <div key={category.title} className="mb-4">
-                          <h4 className="font-medium text-sm mb-2">{category.title}</h4>
+                          <h4 className="font-medium text-sm mb-2 text-[#001F3F] border-b border-gray-100 pb-1">{category.title}</h4>
                           <ul className="space-y-2">
                             {category.items.map((item) => (
                               <li key={item.name}>
                                 <NavigationMenuLink asChild>
                                   <Link 
                                     to={item.path}
-                                    className="block select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                    className="block select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-[#00BFFF]/10 hover:text-[#00BFFF] focus:bg-[#00BFFF]/10 focus:text-[#00BFFF]"
                                   >
                                     {item.name}
                                   </Link>
@@ -98,10 +98,10 @@ const Header = () => {
               </NavigationMenuList>
             </NavigationMenu>
             
-            <Link to="/contact" className="font-medium text-gray-700 hover:text-[#00BFFF]">
+            <Link to="/contact" className="font-medium text-gray-700 hover:text-[#00BFFF] transition-colors">
               Contact Us
             </Link>
-            <Button className="bg-[#00C853] hover:bg-[#00C853]/90">Get Started</Button>
+            <Button className="bg-gradient-to-r from-[#00C853] to-[#00BFFF] hover:from-[#00C853]/90 hover:to-[#00BFFF]/90">Get Started</Button>
           </nav>
         ) : (
           <button onClick={toggleMenu} className="p-2 md:hidden">
@@ -163,7 +163,7 @@ const Header = () => {
               Contact Us
             </Link>
             <div className="px-4 py-3">
-              <Button className="w-full bg-[#00C853] hover:bg-[#00C853]/90">Get Started</Button>
+              <Button className="w-full bg-gradient-to-r from-[#00C853] to-[#00BFFF] hover:from-[#00C853]/90 hover:to-[#00BFFF]/90">Get Started</Button>
             </div>
           </nav>
         </div>
