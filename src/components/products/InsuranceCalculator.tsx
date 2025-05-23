@@ -45,8 +45,11 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
   });
 
   // Term Insurance Mortality Rate Table (per 1,000 sum assured)
-  const getMortalityRate = (age: number, gender: string) => {
+  const getMortalityRate = (age: number, gender: string, isSmoker: boolean) => {
+    // Base mortality rates for non-smoking males
     const maleRates: {[key: number]: number} = {
+      20: 1.39,
+      23: 1.41,
       25: 1.43,
       30: 1.46,
       35: 1.85,
@@ -57,55 +60,45 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
       60: 13.2
     };
     
-    const femaleRates: {[key: number]: number} = {
-      25: 1.22,
-      30: 1.24,
-      35: 1.57,
-      40: 2.11,
-      45: 3.23,
-      50: 5.02,
-      55: 7.44,
-      60: 11.22
-    };
-
     // Find closest age key
-    const rates = gender === "female" ? femaleRates : maleRates;
-    const ages = Object.keys(rates).map(Number);
+    const ages = Object.keys(maleRates).map(Number);
     const closest = ages.reduce((prev, curr) => {
       return (Math.abs(curr - age) < Math.abs(prev - age) ? curr : prev);
     });
     
-    return rates[closest];
+    let rate = maleRates[closest];
+    
+    // Apply gender discount for females (15% lower rate)
+    if (gender === "female") {
+      rate *= 0.85;
+    }
+    
+    // Apply smoker surcharge (35% higher rate)
+    if (isSmoker) {
+      rate *= 1.35;
+    }
+    
+    return rate;
   };
 
   const calculateTermPremium = () => {
-    // Base calculation using mortality rate
-    const baseRate = getMortalityRate(termData.age, termData.gender);
-    let premium = (termData.coverAmount * baseRate) / 10; // Cover in lakhs, rate per 1000
+    // Get base mortality rate
+    const mortalityRate = getMortalityRate(termData.age, termData.gender, termData.isSmoker);
     
-    // Apply gender discount
-    if (termData.gender === "female") {
-      premium *= 0.85; // 15% discount for women
-    }
+    // Calculate base premium (Sum Assured / 1000) * Mortality Rate
+    const basePremium = (termData.coverAmount * 1000) * mortalityRate / 1000;
     
-    // Apply smoker surcharge
-    if (termData.isSmoker) {
-      premium *= 1.35; // 35% surcharge for smokers
-    }
+    // Add GST (18%)
+    const gst = basePremium * 0.18;
+    const annualPremium = basePremium + gst;
     
-    // Apply policy term adjustment
-    const termFactor = 1 + ((termData.term - 20) * 0.015); // +/-1.5% per year from 20
-    premium *= Math.max(0.7, Math.min(1.5, termFactor));
-    
-    // Add GST
-    const withGST = premium * 1.18; // 18% GST
-    
-    // Monthly payment frequency adjustment
+    // If monthly payment, apply 2.5% modal loading and divide by 12
     if (termData.paymentFrequency === "monthly") {
-      return Math.round((withGST / 12) * 1.025); // 2.5% loading for monthly payments
+      return Math.round((annualPremium / 12) * 1.025);
     }
     
-    return Math.round(withGST);
+    // Return annual premium
+    return Math.round(annualPremium);
   };
 
   const calculateHealthPremium = () => {
@@ -188,12 +181,12 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
     switch (type) {
       case "term":
         return (
-          <div className="p-6 bg-gradient-to-br from-white to-blue-50 rounded-lg shadow-md border border-blue-100">
-            <h3 className="mb-6 text-xl font-semibold text-[#001F3F]">Term Insurance Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+            <h3 className="mb-4 text-lg font-medium text-gray-800">Term Insurance Calculator</h3>
             
-            <div className="mb-5">
-              <Label>Your Age</Label>
-              <div className="flex items-center gap-4">
+            <div className="mb-4">
+              <Label>Age</Label>
+              <div className="flex items-center gap-2">
                 <Slider
                   value={[termData.age]}
                   min={18}
@@ -202,7 +195,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   onValueChange={(value) => setTermData({ ...termData, age: value[0] })}
                   className="flex-1"
                 />
-                <span className="w-16 text-center bg-blue-50 px-2 py-1 rounded">{termData.age} yrs</span>
+                <span className="w-12 text-center bg-gray-100 px-2 py-1 rounded">{termData.age}</span>
               </div>
             </div>
             
@@ -210,9 +203,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               <Label>Gender</Label>
               <div className="grid grid-cols-2 gap-2 mt-1">
                 <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
                     termData.gender === "male" 
-                      ? "bg-blue-100 border-blue-200 text-blue-800" 
+                      ? "bg-blue-50 border-blue-100 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, gender: "male" })}
@@ -220,9 +213,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   Male
                 </button>
                 <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
                     termData.gender === "female" 
-                      ? "bg-blue-100 border-blue-200 text-blue-800" 
+                      ? "bg-blue-50 border-blue-100 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, gender: "female" })}
@@ -233,8 +226,8 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
             </div>
             
             <div className="mb-4">
-              <Label>Cover Amount</Label>
-              <div className="flex items-center gap-4">
+              <Label>Cover Amount (₹ Lakh)</Label>
+              <div className="flex items-center gap-2">
                 <Slider
                   value={[termData.coverAmount]}
                   min={10}
@@ -243,13 +236,13 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   onValueChange={(value) => setTermData({ ...termData, coverAmount: value[0] })}
                   className="flex-1"
                 />
-                <span className="w-20 text-center bg-blue-50 px-2 py-1 rounded">₹{termData.coverAmount} Lakh</span>
+                <span className="w-16 text-center bg-gray-100 px-2 py-1 rounded">₹{termData.coverAmount}L</span>
               </div>
             </div>
             
             <div className="mb-4">
               <Label>Policy Term</Label>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <Slider
                   value={[termData.term]}
                   min={5}
@@ -258,7 +251,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   onValueChange={(value) => setTermData({ ...termData, term: value[0] })}
                   className="flex-1"
                 />
-                <span className="w-16 text-center bg-blue-50 px-2 py-1 rounded">{termData.term} yrs</span>
+                <span className="w-12 text-center bg-gray-100 px-2 py-1 rounded">{termData.term}y</span>
               </div>
             </div>
             
@@ -270,17 +263,17 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   onChange={(e) => setTermData({ ...termData, isSmoker: e.target.checked })}
                   className="rounded text-blue-600 focus:ring-blue-500"
                 />
-                Smoker / Tobacco User
+                Smoker
               </Label>
             </div>
 
-            <div className="mb-5">
+            <div className="mb-4">
               <Label>Payment Frequency</Label>
               <div className="grid grid-cols-2 gap-2 mt-1">
                 <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
                     termData.paymentFrequency === "annual" 
-                      ? "bg-blue-100 border-blue-200 text-blue-800" 
+                      ? "bg-blue-50 border-blue-100 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, paymentFrequency: "annual" })}
@@ -288,9 +281,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   Annual
                 </button>
                 <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
                     termData.paymentFrequency === "monthly" 
-                      ? "bg-blue-100 border-blue-200 text-blue-800" 
+                      ? "bg-blue-50 border-blue-100 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, paymentFrequency: "monthly" })}
@@ -300,20 +293,20 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </div>
             </div>
             
-            <div className="p-4 mb-6 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-md">
+            <div className="p-3 mb-4 bg-gray-50 border border-gray-200 rounded-md">
               <div className="flex items-center justify-between">
-                <span>Estimated {termData.paymentFrequency === "monthly" ? "Monthly" : "Annual"} Premium:</span>
-                <span className="text-lg font-semibold text-[#001F3F]">
+                <span>Premium:</span>
+                <span className="text-lg font-medium text-gray-800">
                   ₹{calculateTermPremium()}
                   {termData.paymentFrequency === "monthly" ? "/month" : "/year"}
                 </span>
               </div>
-              <p className="mt-2 text-xs text-gray-500">
-                Includes 18% GST. Final premium may vary based on medical examination and underwriting.
+              <p className="mt-1 text-xs text-gray-500">
+                Includes 18% GST. Actual premium may vary.
               </p>
             </div>
             
-            <Button className="w-full bg-gradient-to-r from-[#001F3F] to-[#00BFFF] hover:from-[#001F3F]/90 hover:to-[#00BFFF]/90">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700">
               Get Personalized Quote
             </Button>
           </div>
@@ -321,12 +314,13 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
         
       case "health":
         return (
-          <div className="p-6 bg-gradient-to-br from-white to-green-50 rounded-lg shadow-md border border-green-100">
-            <h3 className="mb-6 text-xl font-semibold text-[#001F3F]">Health Insurance Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+            <h3 className="mb-4 text-lg font-medium text-gray-800">Health Insurance Calculator</h3>
             
+            {/* Simplified health calculator UI */}
             <div className="mb-4">
-              <Label>Your Age</Label>
-              <div className="flex items-center gap-4">
+              <Label>Age</Label>
+              <div className="flex items-center gap-2">
                 <Slider
                   value={[healthData.age]}
                   min={18}
@@ -335,79 +329,14 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   onValueChange={(value) => setHealthData({ ...healthData, age: value[0] })}
                   className="flex-1"
                 />
-                <span className="w-16 text-center bg-green-50 px-2 py-1 rounded">{healthData.age} yrs</span>
+                <span className="w-12 text-center bg-gray-100 px-2 py-1 rounded">{healthData.age}</span>
               </div>
             </div>
 
+            {/* Basic health inputs */}
             <div className="mb-4">
-              <Label>Gender</Label>
-              <div className="grid grid-cols-2 gap-2 mt-1">
-                <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
-                    healthData.gender === "male" 
-                      ? "bg-green-100 border-green-200 text-green-800" 
-                      : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                  }`}
-                  onClick={() => setHealthData({ ...healthData, gender: "male" })}
-                >
-                  Male
-                </button>
-                <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
-                    healthData.gender === "female" 
-                      ? "bg-green-100 border-green-200 text-green-800" 
-                      : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                  }`}
-                  onClick={() => setHealthData({ ...healthData, gender: "female" })}
-                >
-                  Female
-                </button>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <Label>Number of Family Members</Label>
-              <div className="flex items-center gap-4">
-                <Slider
-                  value={[healthData.familyMembers]}
-                  min={1}
-                  max={6}
-                  step={1}
-                  onValueChange={(value) => setHealthData({ ...healthData, familyMembers: value[0] })}
-                  className="flex-1"
-                />
-                <span className="w-16 text-center bg-green-50 px-2 py-1 rounded">{healthData.familyMembers}</span>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <Label>City Type</Label>
-              <select
-                className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                value={healthData.city}
-                onChange={(e) => setHealthData({ ...healthData, city: e.target.value })}
-              >
-                <option value="metro">Metro City</option>
-                <option value="tier1">Tier 1 City</option>
-                <option value="tier2">Tier 2 & Other Cities</option>
-              </select>
-            </div>
-
-            <div className="mb-4">
-              <Label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={healthData.isSmoker}
-                  onChange={(e) => setHealthData({ ...healthData, isSmoker: e.target.checked })}
-                  className="rounded text-green-600 focus:ring-green-500"
-                />
-                Smoker / Tobacco User
-              </Label>
-            </div>
-            
-            <div className="mb-5">
               <Label>Sum Insured</Label>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <Slider
                   value={[healthData.sumInsured]}
                   min={2}
@@ -416,60 +345,22 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   onValueChange={(value) => setHealthData({ ...healthData, sumInsured: value[0] })}
                   className="flex-1"
                 />
-                <span className="w-20 text-center bg-green-50 px-2 py-1 rounded">₹{healthData.sumInsured} Lakh</span>
-              </div>
-            </div>
-
-            <div className="mb-5">
-              <Label>Payment Frequency</Label>
-              <div className="grid grid-cols-2 gap-2 mt-1">
-                <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
-                    healthData.paymentFrequency === "annual" 
-                      ? "bg-green-100 border-green-200 text-green-800" 
-                      : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                  }`}
-                  onClick={() => setHealthData({ ...healthData, paymentFrequency: "annual" })}
-                >
-                  Annual
-                </button>
-                <button 
-                  className={`py-2 px-3 rounded-md text-sm font-medium border transition-colors ${
-                    healthData.paymentFrequency === "monthly" 
-                      ? "bg-green-100 border-green-200 text-green-800" 
-                      : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                  }`}
-                  onClick={() => setHealthData({ ...healthData, paymentFrequency: "monthly" })}
-                >
-                  Monthly
-                </button>
+                <span className="w-16 text-center bg-gray-100 px-2 py-1 rounded">₹{healthData.sumInsured}L</span>
               </div>
             </div>
             
-            <div className="p-4 mb-6 bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-md">
-              <div className="flex items-center justify-between">
-                <span>Estimated {healthData.paymentFrequency === "monthly" ? "Monthly" : "Annual"} Premium:</span>
-                <span className="text-lg font-semibold text-[#001F3F]">
-                  ₹{calculateHealthPremium()}
-                  {healthData.paymentFrequency === "monthly" ? "/month" : "/year"}
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-gray-500">
-                Includes 18% GST. Final premium may vary based on medical history and coverage options.
-              </p>
-            </div>
-            
-            <Button className="w-full bg-gradient-to-r from-[#00C853] to-[#00BFFF] hover:from-[#00C853]/90 hover:to-[#00BFFF]/90">
-              Get Personalized Quote
+            <Button className="w-full bg-green-600 hover:bg-green-700">
+              Get Quote
             </Button>
           </div>
         );
         
       case "vehicle":
         return (
-          <div className="p-6 bg-gradient-to-br from-white to-amber-50 rounded-lg shadow-md border border-amber-100">
-            <h3 className="mb-6 text-xl font-semibold text-[#001F3F]">Vehicle Insurance Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+            <h3 className="mb-4 text-lg font-medium text-gray-800">Vehicle Insurance</h3>
             
+            {/* Simplified vehicle calculator UI */}
             <div className="mb-4">
               <Label>Vehicle Type</Label>
               <select
@@ -482,58 +373,22 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </select>
             </div>
             
-            <div className="mb-4">
-              <Label>Vehicle Age</Label>
-              <div className="flex items-center gap-4">
-                <Slider
-                  value={[vehicleData.vehicleAge]}
-                  min={0}
-                  max={15}
-                  step={1}
-                  onValueChange={(value) => setVehicleData({ ...vehicleData, vehicleAge: value[0] })}
-                  className="flex-1"
-                />
-                <span className="w-16 text-center bg-amber-50 px-2 py-1 rounded">{vehicleData.vehicleAge} yrs</span>
-              </div>
-            </div>
-            
-            <div className="mb-6">
-              <Label>Coverage Type</Label>
-              <select
-                className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                value={vehicleData.coverageType}
-                onChange={(e) => setVehicleData({ ...vehicleData, coverageType: e.target.value })}
-              >
-                <option value="third-party">Third Party</option>
-                <option value="comprehensive">Comprehensive</option>
-              </select>
-            </div>
-            
-            <div className="p-4 mb-6 bg-gradient-to-r from-amber-50 to-amber-100 border border-amber-200 rounded-md">
-              <div className="flex items-center justify-between">
-                <span>Estimated Annual Premium:</span>
-                <span className="text-lg font-semibold text-[#001F3F]">₹{calculateVehiclePremium()}</span>
-              </div>
-              <p className="mt-2 text-xs text-gray-500">
-                Includes 18% GST. Final premium may vary based on vehicle make, model and additional coverage options.
-              </p>
-            </div>
-            
-            <Button className="w-full bg-gradient-to-r from-[#FF9800] to-[#F44336] hover:from-[#FF9800]/90 hover:to-[#F44336]/90">
-              Get Personalized Quote
+            <Button className="w-full bg-amber-600 hover:bg-amber-700">
+              Get Quote
             </Button>
           </div>
         );
         
       case "investment":
         return (
-          <div className="p-6 bg-gradient-to-br from-white to-purple-50 rounded-lg shadow-md border border-purple-100">
-            <h3 className="mb-6 text-xl font-semibold text-[#001F3F]">Investment Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+            <h3 className="mb-4 text-lg font-medium text-gray-800">Investment Calculator</h3>
             
+            {/* Simplified investment calculator UI */}
             <div className="mb-4">
-              <Label>Investment Amount</Label>
+              <Label>Monthly Investment</Label>
               <div className="flex items-center mt-1">
-                <span className="p-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md">₹</span>
+                <span className="p-1 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md">₹</span>
                 <Input
                   type="number"
                   min="1000"
@@ -544,53 +399,8 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </div>
             </div>
             
-            <div className="mb-4">
-              <Label>Investment Frequency</Label>
-              <select
-                className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                value={investmentData.frequency}
-                onChange={(e) => setInvestmentData({ ...investmentData, frequency: e.target.value })}
-              >
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-              </select>
-            </div>
-            
-            <div className="mb-6">
-              <Label>Investment Period</Label>
-              <div className="flex items-center gap-4">
-                <Slider
-                  value={[investmentData.period]}
-                  min={1}
-                  max={30}
-                  step={1}
-                  onValueChange={(value) => setInvestmentData({ ...investmentData, period: value[0] })}
-                  className="flex-1"
-                />
-                <span className="w-16 text-center bg-purple-50 px-2 py-1 rounded">{investmentData.period} yrs</span>
-              </div>
-            </div>
-            
-            <div className="p-4 mb-6 bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-md">
-              <div className="mb-2">
-                <span className="text-sm text-gray-600">Total Investment:</span>
-                <span className="block text-lg font-semibold text-[#001F3F]">
-                  ₹{investmentData.amount * (investmentData.frequency === "monthly" ? 12 : 1) * investmentData.period}
-                </span>
-              </div>
-              <div>
-                <span className="text-sm text-gray-600">Estimated Returns:</span>
-                <span className="block text-lg font-semibold text-[#00C853]">
-                  ₹{calculateInvestmentReturns()}
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-gray-500">
-                Returns are estimated at 8% p.a. compound interest. Actual returns may vary based on market conditions.
-              </p>
-            </div>
-            
-            <Button className="w-full bg-gradient-to-r from-[#673AB7] to-[#3F51B5] hover:from-[#673AB7]/90 hover:to-[#3F51B5]/90">
-              Talk to an Advisor
+            <Button className="w-full bg-purple-600 hover:bg-purple-700">
+              Calculate Returns
             </Button>
           </div>
         );

@@ -1,25 +1,25 @@
 
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleCategory = (category: string) => {
+    if (openCategory === category) {
+      setOpenCategory(null);
+    } else {
+      setOpenCategory(category);
+    }
   };
 
   const financialProducts = [
@@ -47,123 +47,121 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-      <div className="container flex items-center justify-between h-16 px-4 mx-auto">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold bg-gradient-to-r from-[#001F3F] to-[#00BFFF] text-transparent bg-clip-text">
+    <header className="bg-white border-b border-gray-100 shadow-sm">
+      <div className="container flex items-center justify-between h-14 px-4 mx-auto">
+        <Link to="/" className="flex items-center">
+          <span className="text-xl font-bold text-[#001F3F]">
             Confidence
-            <span className="font-bold">Financial</span>
+            <span className="font-bold text-[#00BFFF]">Financial</span>
           </span>
         </Link>
 
         {!isMobile ? (
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="font-medium text-gray-700 hover:text-[#00BFFF] transition-colors">
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link to="/" className="text-gray-700 hover:text-[#00BFFF]">
               Home
             </Link>
-            <Link to="/about" className="font-medium text-gray-700 hover:text-[#00BFFF] transition-colors">
-              About Us
+            <Link to="/about" className="text-gray-700 hover:text-[#00BFFF]">
+              About
             </Link>
             
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-medium text-gray-700 hover:text-[#00BFFF] bg-transparent">
-                    Financial Products
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-[220px] p-4 bg-white shadow-lg rounded-md">
-                      {financialProducts.map((category) => (
-                        <div key={category.title} className="mb-4">
-                          <h4 className="font-medium text-sm mb-2 text-[#001F3F] border-b border-gray-100 pb-1">{category.title}</h4>
-                          <ul className="space-y-2">
-                            {category.items.map((item) => (
-                              <li key={item.name}>
-                                <NavigationMenuLink asChild>
-                                  <Link 
-                                    to={item.path}
-                                    className="block select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-[#00BFFF]/10 hover:text-[#00BFFF] focus:bg-[#00BFFF]/10 focus:text-[#00BFFF]"
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            <div className="relative group">
+              <button 
+                className="flex items-center text-gray-700 hover:text-[#00BFFF] gap-1"
+                onClick={() => toggleCategory("products")}
+              >
+                Products
+                <ChevronDown size={16} />
+              </button>
+              
+              <div className="hidden group-hover:block absolute top-full left-0 w-52 bg-white shadow-md rounded-md z-50">
+                {financialProducts.map((category) => (
+                  <div key={category.title} className="border-b border-gray-100 last:border-none">
+                    <div className="p-3 font-medium text-[#001F3F]">{category.title}</div>
+                    {category.items.map((item) => (
+                      <Link 
+                        key={item.name}
+                        to={item.path}
+                        className="block p-3 pl-5 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#00BFFF]"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
             
-            <Link to="/contact" className="font-medium text-gray-700 hover:text-[#00BFFF] transition-colors">
-              Contact Us
+            <Link to="/contact" className="text-gray-700 hover:text-[#00BFFF]">
+              Contact
             </Link>
-            <Button className="bg-gradient-to-r from-[#00C853] to-[#00BFFF] hover:from-[#00C853]/90 hover:to-[#00BFFF]/90">Get Started</Button>
+            <Button className="bg-[#00BFFF] hover:bg-[#00BFFF]/90">Get Started</Button>
           </nav>
         ) : (
           <button onClick={toggleMenu} className="p-2 md:hidden">
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         )}
       </div>
 
       {isMobile && isMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-lg md:hidden">
-          <nav className="flex flex-col py-4">
+        <div className="absolute top-14 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-md md:hidden">
+          <nav className="flex flex-col py-2">
             <Link
               to="/"
-              className="px-4 py-3 font-medium text-gray-700 hover:bg-gray-50"
+              className="px-4 py-2 text-gray-700 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/about"
-              className="px-4 py-3 font-medium text-gray-700 hover:bg-gray-50"
+              className="px-4 py-2 text-gray-700 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              About Us
+              About
             </Link>
             
-            <div className="px-4 py-3 font-medium text-gray-700">
-              <div className="flex items-center justify-between">
-                <span>Financial Products</span>
-                <ChevronDown size={16} />
-              </div>
-              <div className="pl-4 mt-2 space-y-2">
-                {financialProducts.map((category) => (
-                  <div key={category.title} className="mb-2">
-                    <h4 className="mb-1 text-sm font-semibold text-gray-500">{category.title}</h4>
-                    <ul className="space-y-1">
+            <div>
+              <button 
+                className="flex items-center justify-between w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
+                onClick={() => toggleCategory("products")}
+              >
+                <span>Products</span>
+                {openCategory === "products" ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </button>
+              
+              {openCategory === "products" && (
+                <div className="bg-gray-50">
+                  {financialProducts.map((category) => (
+                    <div key={category.title} className="border-t border-gray-100">
+                      <div className="px-4 py-2 text-sm font-medium text-gray-700">{category.title}</div>
                       {category.items.map((item) => (
-                        <li key={item.name}>
-                          <Link
-                            to={item.path}
-                            className="block py-1 text-gray-700"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            {item.name}
-                          </Link>
-                        </li>
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
                       ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             
             <Link
               to="/contact"
-              className="px-4 py-3 font-medium text-gray-700 hover:bg-gray-50"
+              className="px-4 py-2 text-gray-700 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact Us
+              Contact
             </Link>
-            <div className="px-4 py-3">
-              <Button className="w-full bg-gradient-to-r from-[#00C853] to-[#00BFFF] hover:from-[#00C853]/90 hover:to-[#00BFFF]/90">Get Started</Button>
+            <div className="px-4 py-2">
+              <Button className="w-full bg-[#00BFFF] hover:bg-[#00BFFF]/90">Get Started</Button>
             </div>
           </nav>
         </div>
