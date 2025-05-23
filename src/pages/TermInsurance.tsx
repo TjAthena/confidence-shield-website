@@ -50,34 +50,34 @@ const TermInsurance = () => {
 
   return (
     <div>
-      <section className="py-8 bg-gray-50">
+      <section className="py-8 bg-gradient-to-b from-gray-50 to-white">
         <div className="container px-4 mx-auto">
           <div className="flex items-center mb-2 text-sm">
-            <Link to="/" className="text-gray-500 hover:text-blue-500">Home</Link>
+            <Link to="/" className="text-gray-500 hover:text-blue-500 transition-colors">Home</Link>
             <span className="mx-2 text-gray-400">/</span>
             <span className="text-gray-600">Term Insurance</span>
           </div>
           
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 items-center">
             <div>
-              <h1 className="mb-3 text-2xl font-bold text-gray-800">Term Insurance</h1>
+              <h1 className="mb-3 text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Term Insurance</h1>
               <p className="text-gray-600">
                 Term insurance provides pure life protection for a specified period, offering high coverage at affordable premiums. If the insured passes away during the policy term, the nominee receives the sum assured.
               </p>
               <div className="mt-4 flex gap-3">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all">
                   Get a Quote
                 </Button>
-                <Button variant="outline" className="border-gray-400 text-gray-700">
+                <Button variant="outline" className="border-gray-400 text-gray-700 hover:bg-gray-100 hover:border-blue-300 transition-all">
                   Learn More
                 </Button>
               </div>
             </div>
-            <div>
+            <div className="hover:scale-[1.02] transition-transform duration-300">
               <img 
                 src="https://images.unsplash.com/photo-1560472355-109703aa3edc?auto=format&fit=crop&w=800&q=80" 
                 alt="Family protected by insurance" 
-                className="rounded-md shadow w-full object-cover h-[300px]"
+                className="rounded-md shadow-md hover:shadow-lg w-full object-cover h-[300px]"
               />
             </div>
           </div>
@@ -89,7 +89,7 @@ const TermInsurance = () => {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <div className="mb-8">
-                <h2 className="mb-4 text-xl font-medium text-gray-800">Understanding Term Insurance</h2>
+                <h2 className="mb-4 text-xl font-medium bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Understanding Term Insurance</h2>
                 <div className="text-gray-600">
                   <p className="mb-4">
                     Term Insurance is designed to provide financial protection against unexpected events, ensuring that you and your loved ones remain financially stable during difficult times.
@@ -99,7 +99,7 @@ const TermInsurance = () => {
                   </p>
                 </div>
 
-                <div className="mt-6 p-4 bg-gray-50 rounded border border-gray-200">
+                <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all">
                   <h3 className="text-lg font-medium mb-2 text-gray-800">Premium Calculation Factors</h3>
                   <ul className="space-y-2 text-gray-600">
                     <li className="flex items-start">
@@ -129,13 +129,13 @@ const TermInsurance = () => {
               <div className="sticky top-20">
                 <InsuranceCalculator type="term" />
                 
-                <div className="p-4 mt-6 bg-gray-50 rounded border border-gray-200">
+                <div className="p-4 mt-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all">
                   <h3 className="mb-2 text-lg font-medium">Need Help?</h3>
                   <p className="mb-4 text-gray-600">
                     Our financial advisors can help you choose the right plan based on your needs.
                   </p>
                   <Link to="/contact">
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all">
                       Talk to an Advisor
                     </Button>
                   </Link>

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -94,11 +95,11 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
     
     // If monthly payment, apply 2.5% modal loading and divide by 12
     if (termData.paymentFrequency === "monthly") {
-      return Math.round((annualPremium / 12) * 1.025);
+      return (annualPremium / 12) * 1.025;
     }
     
-    // Return annual premium
-    return Math.round(annualPremium);
+    // Return annual premium without rounding
+    return annualPremium;
   };
 
   const calculateHealthPremium = () => {
@@ -153,10 +154,10 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
     
     // Convert to payment frequency
     if (healthData.paymentFrequency === "annual") {
-      return Math.round(monthlyPremium * 11.5); // Annual is ~11.5 times monthly (discount)
+      return monthlyPremium * 11.5; // Annual is ~11.5 times monthly (discount)
     }
     
-    return Math.round(monthlyPremium);
+    return monthlyPremium;
   };
 
   const calculateVehiclePremium = () => {
@@ -164,7 +165,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
     let basePremium = vehicleData.vehicleType === "car" ? 5000 : 2000;
     if (vehicleData.vehicleAge > 5) basePremium *= 1.2;
     if (vehicleData.coverageType === "comprehensive") basePremium *= 1.5;
-    return Math.round(basePremium);
+    return basePremium;
   };
 
   const calculateInvestmentReturns = () => {
@@ -174,15 +175,24 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
       : investmentData.amount / 12;
     const totalInvestment = monthlyAmount * 12 * investmentData.period;
     const estimatedReturns = totalInvestment * 1.08 ** investmentData.period;
-    return Math.round(estimatedReturns);
+    return estimatedReturns;
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount).replace('₹', '₹ ');
   };
 
   const renderCalculator = () => {
     switch (type) {
       case "term":
         return (
-          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-            <h3 className="mb-4 text-lg font-medium text-gray-800">Term Insurance Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="mb-4 text-lg font-medium text-gray-800 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Term Insurance Calculator</h3>
             
             <div className="mb-4">
               <Label>Age</Label>
@@ -203,9 +213,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               <Label>Gender</Label>
               <div className="grid grid-cols-2 gap-2 mt-1">
                 <button 
-                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border transition-all ${
                     termData.gender === "male" 
-                      ? "bg-blue-50 border-blue-100 text-blue-700" 
+                      ? "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, gender: "male" })}
@@ -213,9 +223,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   Male
                 </button>
                 <button 
-                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border transition-all ${
                     termData.gender === "female" 
-                      ? "bg-blue-50 border-blue-100 text-blue-700" 
+                      ? "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, gender: "female" })}
@@ -271,9 +281,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               <Label>Payment Frequency</Label>
               <div className="grid grid-cols-2 gap-2 mt-1">
                 <button 
-                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border transition-all ${
                     termData.paymentFrequency === "annual" 
-                      ? "bg-blue-50 border-blue-100 text-blue-700" 
+                      ? "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, paymentFrequency: "annual" })}
@@ -281,9 +291,9 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   Annual
                 </button>
                 <button 
-                  className={`py-1 px-2 rounded-md text-sm font-medium border ${
+                  className={`py-1 px-2 rounded-md text-sm font-medium border transition-all ${
                     termData.paymentFrequency === "monthly" 
-                      ? "bg-blue-50 border-blue-100 text-blue-700" 
+                      ? "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 text-blue-700" 
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setTermData({ ...termData, paymentFrequency: "monthly" })}
@@ -293,12 +303,14 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </div>
             </div>
             
-            <div className="p-3 mb-4 bg-gray-50 border border-gray-200 rounded-md">
+            <div className="p-3 mb-4 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100 rounded-md hover:shadow-sm transition-all">
               <div className="flex items-center justify-between">
                 <span>Premium:</span>
                 <span className="text-lg font-medium text-gray-800">
-                  ₹{calculateTermPremium()}
-                  {termData.paymentFrequency === "monthly" ? "/month" : "/year"}
+                  {formatCurrency(calculateTermPremium())}
+                  <span className="text-sm text-gray-600">
+                    {termData.paymentFrequency === "monthly" ? "/month" : "/year"}
+                  </span>
                 </span>
               </div>
               <p className="mt-1 text-xs text-gray-500">
@@ -306,7 +318,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </p>
             </div>
             
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">
+            <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all">
               Get Personalized Quote
             </Button>
           </div>
@@ -314,8 +326,8 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
         
       case "health":
         return (
-          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-            <h3 className="mb-4 text-lg font-medium text-gray-800">Health Insurance Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="mb-4 text-lg font-medium text-gray-800 bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">Health Insurance Calculator</h3>
             
             {/* Simplified health calculator UI */}
             <div className="mb-4">
@@ -349,7 +361,19 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </div>
             </div>
             
-            <Button className="w-full bg-green-600 hover:bg-green-700">
+            <div className="p-3 mb-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 rounded-md hover:shadow-sm transition-all">
+              <div className="flex items-center justify-between">
+                <span>Premium:</span>
+                <span className="text-lg font-medium text-gray-800">
+                  {formatCurrency(calculateHealthPremium())}
+                  <span className="text-sm text-gray-600">
+                    {healthData.paymentFrequency === "monthly" ? "/month" : "/year"}
+                  </span>
+                </span>
+              </div>
+            </div>
+            
+            <Button className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 transition-all">
               Get Quote
             </Button>
           </div>
@@ -357,14 +381,14 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
         
       case "vehicle":
         return (
-          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-            <h3 className="mb-4 text-lg font-medium text-gray-800">Vehicle Insurance</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="mb-4 text-lg font-medium text-gray-800 bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text text-transparent">Vehicle Insurance</h3>
             
             {/* Simplified vehicle calculator UI */}
             <div className="mb-4">
               <Label>Vehicle Type</Label>
               <select
-                className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                className="w-full p-2 mt-1 border border-gray-300 rounded-md hover:border-amber-300 transition-colors"
                 value={vehicleData.vehicleType}
                 onChange={(e) => setVehicleData({ ...vehicleData, vehicleType: e.target.value })}
               >
@@ -373,7 +397,17 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </select>
             </div>
             
-            <Button className="w-full bg-amber-600 hover:bg-amber-700">
+            <div className="p-3 mb-4 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-100 rounded-md hover:shadow-sm transition-all">
+              <div className="flex items-center justify-between">
+                <span>Premium:</span>
+                <span className="text-lg font-medium text-gray-800">
+                  {formatCurrency(calculateVehiclePremium())}
+                  <span className="text-sm text-gray-600">/year</span>
+                </span>
+              </div>
+            </div>
+            
+            <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all">
               Get Quote
             </Button>
           </div>
@@ -381,8 +415,8 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
         
       case "investment":
         return (
-          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-            <h3 className="mb-4 text-lg font-medium text-gray-800">Investment Calculator</h3>
+          <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="mb-4 text-lg font-medium text-gray-800 bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent">Investment Calculator</h3>
             
             {/* Simplified investment calculator UI */}
             <div className="mb-4">
@@ -394,12 +428,21 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
                   min="1000"
                   value={investmentData.amount}
                   onChange={(e) => setInvestmentData({ ...investmentData, amount: Number(e.target.value) })}
-                  className="rounded-l-none"
+                  className="rounded-l-none hover:border-purple-300 transition-colors"
                 />
               </div>
             </div>
             
-            <Button className="w-full bg-purple-600 hover:bg-purple-700">
+            <div className="p-3 mb-4 bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-100 rounded-md hover:shadow-sm transition-all">
+              <div className="flex items-center justify-between">
+                <span>Estimated Returns:</span>
+                <span className="text-lg font-medium text-gray-800">
+                  {formatCurrency(calculateInvestmentReturns())}
+                </span>
+              </div>
+            </div>
+            
+            <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-all">
               Calculate Returns
             </Button>
           </div>
