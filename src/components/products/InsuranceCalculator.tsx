@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,8 +45,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
   });
 
   // Term Insurance Mortality Rate Table (per 1,000 sum assured)
-  const getMortalityRate = (age: number, gender: string, isSmoker: boolean) => {
-    // Base mortality rates for non-smoking males
+  const getMortalityRate = (age: number, gender: string, isSmoker: boolean): number => {
     const maleRates: {[key: number]: number} = {
       20: 1.39,
       23: 1.41,
@@ -60,46 +58,37 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
       55: 8.75,
       60: 13.2
     };
-    
-    // Find closest age key
+  
     const ages = Object.keys(maleRates).map(Number);
-    const closest = ages.reduce((prev, curr) => {
-      return (Math.abs(curr - age) < Math.abs(prev - age) ? curr : prev);
-    });
-    
+    const closest = ages.reduce((prev, curr) => Math.abs(curr - age) < Math.abs(prev - age) ? curr : prev);
     let rate = maleRates[closest];
-    
-    // Apply gender discount for females (15% lower rate)
+  
     if (gender === "female") {
-      rate *= 0.85;
+      rate *= 0.85; // 15% lower rate
     }
-    
-    // Apply smoker surcharge (35% higher rate)
+  
     if (isSmoker) {
-      rate *= 1.35;
+      rate *= 1.35; // 35% higher rate
     }
-    
+  
     return rate;
   };
 
   const calculateTermPremium = () => {
-    // Get base mortality rate
     const mortalityRate = getMortalityRate(termData.age, termData.gender, termData.isSmoker);
     
-    // Calculate base premium (Sum Assured / 1000) * Mortality Rate
-    const basePremium = (termData.coverAmount * 1000) * mortalityRate / 1000;
+    // Convert coverAmount from lakhs to rupees, then divide by 1000 for the calculation
+    const coverAmountInRupees = termData.coverAmount * 100000;
+    const basePremium = (coverAmountInRupees / 1000) * mortalityRate;
     
-    // Add GST (18%)
     const gst = basePremium * 0.18;
     const annualPremium = basePremium + gst;
     
-    // If monthly payment, apply 2.5% modal loading and divide by 12
     if (termData.paymentFrequency === "monthly") {
-      return (annualPremium / 12) * 1.025;
+      return (annualPremium / 12) * 1.025; // Monthly with modal loading
     }
     
-    // Return annual premium without rounding
-    return annualPremium;
+    return annualPremium; // Annual premium
   };
 
   const calculateHealthPremium = () => {
@@ -182,7 +171,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
-      minimumFractionDigits: 2,
+      minimumFractionDigits: 0,
       maximumFractionDigits: 2
     }).format(amount).replace('₹', '₹ ');
   };
@@ -303,7 +292,7 @@ const InsuranceCalculator = ({ type }: CalculatorProps) => {
               </div>
             </div>
             
-            <div className="p-3 mb-4 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100 rounded-md hover:shadow-sm transition-all">
+            <div className="p-3 mb-4 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100 rounded-md hover:shadow-sm transition-all hover:from-blue-100 hover:to-cyan-100">
               <div className="flex items-center justify-between">
                 <span>Premium:</span>
                 <span className="text-lg font-medium text-gray-800">

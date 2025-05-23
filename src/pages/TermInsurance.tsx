@@ -65,10 +65,10 @@ const TermInsurance = () => {
                 Term insurance provides pure life protection for a specified period, offering high coverage at affordable premiums. If the insured passes away during the policy term, the nominee receives the sum assured.
               </p>
               <div className="mt-4 flex gap-3">
-                <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all">
+                <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 duration-200">
                   Get a Quote
                 </Button>
-                <Button variant="outline" className="border-gray-400 text-gray-700 hover:bg-gray-100 hover:border-blue-300 transition-all">
+                <Button variant="outline" className="border-gray-400 text-gray-700 hover:bg-gray-100 hover:border-blue-300 transition-all transform hover:scale-105 duration-200">
                   Learn More
                 </Button>
               </div>
@@ -99,22 +99,22 @@ const TermInsurance = () => {
                   </p>
                 </div>
 
-                <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all">
+                <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all hover:bg-gradient-to-r hover:from-gray-100 hover:to-blue-100">
                   <h3 className="text-lg font-medium mb-2 text-gray-800">Premium Calculation Factors</h3>
                   <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start">
+                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
                       <span className="mr-2">•</span>
                       <span><strong>Age & Gender:</strong> Younger individuals and females typically pay lower premiums.</span>
                     </li>
-                    <li className="flex items-start">
+                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
                       <span className="mr-2">•</span>
                       <span><strong>Smoking Status:</strong> Smokers pay 30-40% higher premiums due to increased health risks.</span>
                     </li>
-                    <li className="flex items-start">
+                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
                       <span className="mr-2">•</span>
                       <span><strong>Sum Assured:</strong> Higher coverage amounts lead to higher premiums.</span>
                     </li>
-                    <li className="flex items-start">
+                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
                       <span className="mr-2">•</span>
                       <span><strong>Policy Term:</strong> Longer coverage periods result in higher premiums.</span>
                     </li>
@@ -129,13 +129,13 @@ const TermInsurance = () => {
               <div className="sticky top-20">
                 <InsuranceCalculator type="term" />
                 
-                <div className="p-4 mt-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all">
+                <div className="p-4 mt-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all hover:from-blue-100 hover:to-blue-200">
                   <h3 className="mb-2 text-lg font-medium">Need Help?</h3>
                   <p className="mb-4 text-gray-600">
                     Our financial advisors can help you choose the right plan based on your needs.
                   </p>
                   <Link to="/contact">
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all">
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02] duration-200">
                       Talk to an Advisor
                     </Button>
                   </Link>
