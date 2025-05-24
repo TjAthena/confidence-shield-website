@@ -1,7 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import InsuranceCalculator from "@/components/products/InsuranceCalculator";
+import ComparativeTermCalculator from "@/components/products/ComparativeTermCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
@@ -84,7 +84,24 @@ const TermInsurance = () => {
         </div>
       </section>
 
-      <section className="py-8 bg-white">
+      {/* New Comparative Calculator Section */}
+      <section className="py-12 bg-white">
+        <div className="container px-4 mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                Compare Term Insurance Quotes
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Get instant quotes from top insurance providers and find the best term insurance plan that suits your needs and budget.
+              </p>
+            </div>
+            <ComparativeTermCalculator />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-8 bg-gray-50">
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
