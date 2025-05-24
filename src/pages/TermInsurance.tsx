@@ -1,7 +1,7 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import InsuranceCalculator from "@/components/products/InsuranceCalculator";
-import ComparativeTermCalculator from "@/components/products/ComparativeTermCalculator";
+import TermInsuranceCalculator from "@/components/products/TermInsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
@@ -84,81 +84,63 @@ const TermInsurance = () => {
         </div>
       </section>
 
-      {/* New Comparative Calculator Section */}
+      {/* Premium Calculator Section */}
       <section className="py-12 bg-white">
         <div className="container px-4 mx-auto">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                Compare Term Insurance Quotes
+                Calculate Your Term Insurance Premium
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Get instant quotes from top insurance providers and find the best term insurance plan that suits your needs and budget.
+                Get instant premium estimates from top insurance providers using real calculation formulas. 
+                Compare and find the best term insurance plan for your needs.
               </p>
             </div>
-            <ComparativeTermCalculator />
+            <TermInsuranceCalculator />
           </div>
         </div>
       </section>
 
       <section className="py-8 bg-gray-50">
         <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <div className="mb-8">
-                <h2 className="mb-4 text-xl font-medium bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Understanding Term Insurance</h2>
-                <div className="text-gray-600">
-                  <p className="mb-4">
-                    Term Insurance is designed to provide financial protection against unexpected events, ensuring that you and your loved ones remain financially stable during difficult times.
-                  </p>
-                  <p>
-                    With the rising costs of living, having adequate term insurance is essential for long-term financial planning and peace of mind.
-                  </p>
-                </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h2 className="mb-4 text-xl font-medium bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Understanding Term Insurance</h2>
+              <div className="text-gray-600">
+                <p className="mb-4">
+                  Term Insurance is designed to provide financial protection against unexpected events, ensuring that you and your loved ones remain financially stable during difficult times.
+                </p>
+                <p>
+                  With the rising costs of living, having adequate term insurance is essential for long-term financial planning and peace of mind.
+                </p>
+              </div>
 
-                <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all hover:bg-gradient-to-r hover:from-gray-100 hover:to-blue-100">
-                  <h3 className="text-lg font-medium mb-2 text-gray-800">Premium Calculation Factors</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
-                      <span className="mr-2">•</span>
-                      <span><strong>Age & Gender:</strong> Younger individuals and females typically pay lower premiums.</span>
-                    </li>
-                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
-                      <span className="mr-2">•</span>
-                      <span><strong>Smoking Status:</strong> Smokers pay 30-40% higher premiums due to increased health risks.</span>
-                    </li>
-                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
-                      <span className="mr-2">•</span>
-                      <span><strong>Sum Assured:</strong> Higher coverage amounts lead to higher premiums.</span>
-                    </li>
-                    <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
-                      <span className="mr-2">•</span>
-                      <span><strong>Policy Term:</strong> Longer coverage periods result in higher premiums.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <ProviderList providers={providers} />
-              <FAQ faqs={faqs} />
-            </div>
-            <div>
-              <div className="sticky top-20">
-                <InsuranceCalculator type="term" />
-                
-                <div className="p-4 mt-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all hover:from-blue-100 hover:to-blue-200">
-                  <h3 className="mb-2 text-lg font-medium">Need Help?</h3>
-                  <p className="mb-4 text-gray-600">
-                    Our financial advisors can help you choose the right plan based on your needs.
-                  </p>
-                  <Link to="/contact">
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02] duration-200">
-                      Talk to an Advisor
-                    </Button>
-                  </Link>
-                </div>
+              <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded border border-gray-200 hover:shadow-md transition-all hover:bg-gradient-to-r hover:from-gray-100 hover:to-blue-100">
+                <h3 className="text-lg font-medium mb-2 text-gray-800">Premium Calculation Factors</h3>
+                <ul className="space-y-2 text-gray-600">
+                  <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
+                    <span className="mr-2">•</span>
+                    <span><strong>Age & Gender:</strong> Younger individuals and females typically pay lower premiums.</span>
+                  </li>
+                  <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
+                    <span className="mr-2">•</span>
+                    <span><strong>Smoking Status:</strong> Smokers pay 30-40% higher premiums due to increased health risks.</span>
+                  </li>
+                  <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
+                    <span className="mr-2">•</span>
+                    <span><strong>Sum Assured:</strong> Higher coverage amounts lead to higher premiums.</span>
+                  </li>
+                  <li className="flex items-start hover:translate-x-1 transition-transform duration-200">
+                    <span className="mr-2">•</span>
+                    <span><strong>Policy Term:</strong> Longer coverage periods result in higher premiums.</span>
+                  </li>
+                </ul>
               </div>
             </div>
+            
+            <ProviderList providers={providers} />
+            <FAQ faqs={faqs} />
           </div>
         </div>
       </section>
