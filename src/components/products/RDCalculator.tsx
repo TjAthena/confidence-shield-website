@@ -4,72 +4,67 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Trophy, Heart, Shield, Award } from "lucide-react";
+import { Building2, Trophy, TrendingUp, Calendar, Award } from "lucide-react";
 
 interface CalculatorData {
-  age: number;
-  sumInsured: number;
-  isSmoker: boolean;
+  monthlyAmount: number;
+  tenureMonths: number;
 }
 
 interface ProviderResult {
   name: string;
-  annualPremium: number;
-  monthlyPremium: number;
-  claimSettlement: number;
+  maturityAmount: number;
+  totalPrincipal: number;
+  interestEarned: number;
+  interestRate: number;
   logo: React.ReactNode;
 }
 
-const HealthInsuranceCalculator = () => {
+const RDCalculator = () => {
   const [formData, setFormData] = useState<CalculatorData>({
-    age: 30,
-    sumInsured: 5,
-    isSmoker: false,
+    monthlyAmount: 5000,
+    tenureMonths: 12,
   });
 
   const [results, setResults] = useState<ProviderResult[]>([]);
   const [showResults, setShowResults] = useState(false);
 
-  const generateClaimSettlement = () => {
-    return Math.random() * (99.6 - 97.8) + 97.8;
+  const calculateRDMaturity = (P: number, r: number, n: number, t: number) => {
+    const compoundFactor = Math.pow(1 + r / n, n * t);
+    const denominator = 1 - Math.pow(1 + r / n, -1 / n);
+    return P * ((compoundFactor - 1) / denominator);
   };
 
-  const calculatePremiums = () => {
+  const calculateMaturity = () => {
+    const tenureYears = formData.tenureMonths / 12;
     const providers: ProviderResult[] = [];
 
     const providerData = [
-      { name: "Navi", baseRate: 1300, ageFactor: 1.05, smokerFactor: 1.20 },
-      { name: "Reliance Health", baseRate: 1100, ageFactor: 1.10, smokerFactor: 1.20 },
-      { name: "HDFC ERGO", baseRate: 1400, ageFactor: 1.05, smokerFactor: 1.25 },
-      { name: "ICICI Lombard", baseRate: 1500, ageFactor: 1.10, smokerFactor: 1.30 },
-      { name: "Star Health", baseRate: 1250, ageFactor: 1.05, smokerFactor: 1.20 }
+      { name: "Bajaj Finance", rate: 0.074, compoundFreq: 4 },
+      { name: "Shriram Finance", rate: 0.09, compoundFreq: 12 },
+      { name: "Sundaram Finance", rate: 0.072, compoundFreq: 12 }
     ];
 
     providerData.forEach((provider, index) => {
-      let basePremium = provider.baseRate * provider.ageFactor * formData.sumInsured;
-      
-      if (formData.isSmoker) {
-        basePremium *= provider.smokerFactor;
-      }
+      const maturityAmount = calculateRDMaturity(formData.monthlyAmount, provider.rate, provider.compoundFreq, tenureYears);
+      const totalPrincipal = formData.monthlyAmount * formData.tenureMonths;
+      const interestEarned = maturityAmount - totalPrincipal;
 
-      const annual = basePremium;
-      const monthly = basePremium / 12;
-
-      const logoColors = ['from-blue-500 to-blue-600', 'from-red-500 to-red-600', 'from-orange-500 to-orange-600', 'from-purple-500 to-purple-600', 'from-green-500 to-green-600'];
-      const logoLetters = ['N', 'R', 'H', 'I', 'S'];
+      const logoColors = ['from-orange-500 to-orange-600', 'from-blue-500 to-blue-600', 'from-green-500 to-green-600'];
+      const logoLetters = ['B', 'S', 'S'];
 
       providers.push({
         name: provider.name,
-        annualPremium: annual,
-        monthlyPremium: monthly,
-        claimSettlement: generateClaimSettlement(),
+        maturityAmount,
+        totalPrincipal,
+        interestEarned,
+        interestRate: provider.rate * 100,
         logo: <div className={`w-8 h-8 bg-gradient-to-r ${logoColors[index]} rounded flex items-center justify-center text-white text-xs font-bold`}>{logoLetters[index]}</div>
       });
     });
 
-    providers.sort((a, b) => a.annualPremium - b.annualPremium);
+    providers.sort((a, b) => b.maturityAmount - a.maturityAmount);
     setResults(providers);
     setShowResults(true);
   };
@@ -90,10 +85,10 @@ const HealthInsuranceCalculator = () => {
           <div className="space-y-4">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold mb-2 text-[#213753]">
-                Health Insurance Premium Estimates
+                Recurring Deposit Maturity Estimates
               </h3>
               <p className="text-[#3D4E64]">
-                Coverage: ₹{formData.sumInsured} Lakhs | Age: {formData.age} years
+                Monthly: {formatCurrency(formData.monthlyAmount)} | Tenure: {formData.tenureMonths} months
               </p>
             </div>
             
@@ -108,7 +103,7 @@ const HealthInsuranceCalculator = () => {
                   <div className="absolute -top-3 left-4">
                     <Badge className="bg-gradient-to-r from-[#3B9560] to-green-600 text-white px-3 py-1 flex items-center gap-1">
                       <Trophy className="h-3 w-3" />
-                      Best Value
+                      Best Returns
                     </Badge>
                   </div>
                 )}
@@ -119,44 +114,39 @@ const HealthInsuranceCalculator = () => {
                       {provider.logo}
                       <div>
                         <h4 className="font-semibold text-[#213753] text-sm">{provider.name}</h4>
-                        <p className="text-xs text-[#3D4E64]">Cashless hospitals</p>
+                        <p className="text-xs text-[#3D4E64]">{provider.interestRate.toFixed(2)}% p.a.</p>
                       </div>
                     </div>
                     
                     <div className="col-span-3 text-center">
-                      <p className="text-xs text-[#3D4E64] mb-1">Sum Insured</p>
-                      <p className="font-bold text-[#213753] text-sm">₹{formData.sumInsured} Lac</p>
+                      <p className="text-xs text-[#3D4E64] mb-1">Monthly</p>
+                      <p className="font-bold text-[#213753] text-sm">{formatCurrency(formData.monthlyAmount)}</p>
                     </div>
                     
                     <div className="col-span-3 text-center">
-                      <p className="text-xs text-[#3D4E64] mb-1">Age covered</p>
-                      <p className="font-bold text-[#213753] text-sm">{formData.age} Yrs</p>
+                      <p className="text-xs text-[#3D4E64] mb-1">Tenure</p>
+                      <div className="flex items-center justify-center gap-1">
+                        <Calendar className="h-3 w-3 text-[#3B9560]" />
+                        <p className="font-bold text-[#213753] text-sm">{formData.tenureMonths}M</p>
+                      </div>
                     </div>
                     
                     <div className="col-span-3 text-center">
-                      <p className="text-xs text-[#3D4E64] mb-1">Claim settled</p>
+                      <p className="text-xs text-[#3D4E64] mb-1">Total Invested</p>
                       <div className="flex items-center justify-center gap-1">
                         <Award className="h-3 w-3 text-[#3B9560]" />
-                        <p className="font-bold text-[#213753] text-sm">{provider.claimSettlement.toFixed(1)}%</p>
+                        <p className="font-bold text-[#213753] text-sm">{formatCurrency(provider.totalPrincipal)}</p>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-1">
-                      <Shield className="h-4 w-4 text-[#3B9560]" />
-                      <span className="text-sm text-[#3B9560] font-medium">Cashless treatment</span>
-                    </div>
-                    <button className="text-sm text-[#3B9560] hover:underline">See benefits</button>
                   </div>
 
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                     <div>
                       <div className="text-sm text-[#3D4E64] mb-1">
-                        Annual: <span className="font-bold text-[#213753]">{formatCurrency(provider.annualPremium)}</span>
+                        Maturity: <span className="font-bold text-[#213753]">{formatCurrency(provider.maturityAmount)}</span>
                       </div>
                       <div className="text-sm text-[#3D4E64]">
-                        Monthly: <span className="font-bold text-[#213753]">{formatCurrency(provider.monthlyPremium)}</span>
+                        Interest: <span className="font-bold text-[#3B9560]">{formatCurrency(provider.interestEarned)}</span>
                       </div>
                     </div>
                     <Button 
@@ -171,8 +161,7 @@ const HealthInsuranceCalculator = () => {
             ))}
             
             <div className="text-xs text-[#3D4E64] text-center mt-4">
-              * Premiums are estimates based on standard rates. Actual premiums may vary based on 
-              medical underwriting and insurer-specific criteria. No GST included.
+              * Returns are estimates based on current interest rates. Actual returns may vary.
             </div>
           </div>
         ) : (
@@ -180,11 +169,11 @@ const HealthInsuranceCalculator = () => {
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Building2 className="h-12 w-12 text-[#3D4E64] mb-4" />
               <h3 className="text-lg font-medium text-[#213753] mb-2">
-                Ready to Calculate Premiums?
+                Ready to Calculate Returns?
               </h3>
               <p className="text-[#3D4E64] text-center">
-                Fill in your details in the form and click "Calculate Premium" to see 
-                estimated quotes from top health insurance providers.
+                Fill in your monthly investment details and click "Calculate Returns" to see 
+                estimated maturity amounts from top financial institutions.
               </p>
             </CardContent>
           </Card>
@@ -195,55 +184,44 @@ const HealthInsuranceCalculator = () => {
         <Card className="border border-[#3D4E64]/20 hover:shadow-lg transition-all duration-300 bg-[#FCF9F8]">
           <CardHeader className="bg-gradient-to-r from-[#213753] to-[#3D4E64]">
             <CardTitle className="text-xl text-white">
-              Calculate Your Premium
+              Calculate Your RD Returns
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 pt-6">
             <div className="space-y-2">
-              <Label htmlFor="age" className="text-sm font-medium text-[#213753]">Age</Label>
+              <Label htmlFor="monthlyAmount" className="text-sm font-medium text-[#213753]">Monthly Amount (₹)</Label>
               <Input
-                id="age"
+                id="monthlyAmount"
                 type="number"
-                min="18"
-                max="70"
-                value={formData.age}
-                onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
+                min="500"
+                max="100000"
+                value={formData.monthlyAmount}
+                onChange={(e) => setFormData({ ...formData, monthlyAmount: parseInt(e.target.value) || 0 })}
                 className="border-[#3D4E64]/30 focus:border-[#3B9560] bg-white"
+                placeholder="e.g., 5000"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="sumInsured" className="text-sm font-medium text-[#213753]">Sum Insured (₹ Lakhs)</Label>
+              <Label htmlFor="tenure" className="text-sm font-medium text-[#213753]">Tenure (Months)</Label>
               <Input
-                id="sumInsured"
+                id="tenure"
                 type="number"
-                min="2"
-                max="50"
-                value={formData.sumInsured}
-                onChange={(e) => setFormData({ ...formData, sumInsured: parseInt(e.target.value) || 0 })}
+                min="6"
+                max="120"
+                value={formData.tenureMonths}
+                onChange={(e) => setFormData({ ...formData, tenureMonths: parseInt(e.target.value) || 0 })}
                 className="border-[#3D4E64]/30 focus:border-[#3B9560] bg-white"
-                placeholder="e.g., 5 for ₹5 Lakhs"
+                placeholder="e.g., 12 for 1 year"
               />
             </div>
 
-            <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium text-[#213753]">Smoker</Label>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-[#3D4E64]">No</span>
-                <Switch
-                  checked={formData.isSmoker}
-                  onCheckedChange={(checked) => setFormData({ ...formData, isSmoker: checked })}
-                />
-                <span className="text-sm text-[#3D4E64]">Yes</span>
-              </div>
-            </div>
-
             <Button 
-              onClick={calculatePremiums}
+              onClick={calculateMaturity}
               className="w-full bg-gradient-to-r from-[#3B9560] to-green-600 hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-[1.02] duration-200 text-white"
               size="lg"
             >
-              Calculate Premium
+              Calculate Returns
             </Button>
           </CardContent>
         </Card>
@@ -252,4 +230,4 @@ const HealthInsuranceCalculator = () => {
   );
 };
 
-export default HealthInsuranceCalculator;
+export default RDCalculator;

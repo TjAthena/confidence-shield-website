@@ -1,81 +1,103 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import InsuranceCalculator from "@/components/products/InsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
 const MutualFunds = () => {
   const providers = [
     {
-      name: "HDFC AMC",
-      description: "One of India's largest asset management companies with diverse fund offerings."
+      name: "SBI Mutual Fund",
+      description: "India's largest mutual fund house with diverse investment options across equity, debt, and hybrid funds."
     },
     {
-      name: "SBI Mutual Fund",
-      description: "Trusted mutual fund house backed by India's largest bank."
+      name: "HDFC Mutual Fund",
+      description: "Leading fund house known for consistent performance and comprehensive portfolio management solutions."
+    },
+    {
+      name: "ICICI Prudential Mutual Fund",
+      description: "Innovative investment solutions with strong research capabilities and diverse fund offerings."
     },
     {
       name: "Axis Mutual Fund",
-      description: "Known for consistent performance across equity and debt categories."
-    },
-    {
-      name: "ICICI Prudential AMC",
-      description: "Wide range of funds catering to different investment objectives."
+      description: "Dynamic fund management with focus on wealth creation through systematic investment planning."
     }
   ];
   
   const faqs = [
     {
       question: "What are Mutual Funds?",
-      answer: "Mutual funds are professionally managed investment vehicles that pool money from multiple investors to invest in various securities. They offer diversification, liquidity, and potential for higher returns."
+      answer: "Mutual funds are investment vehicles that pool money from multiple investors to purchase a diversified portfolio of stocks, bonds, or other securities, managed by professional fund managers."
     },
     {
-      question: "What types of Mutual Funds are available?",
-      answer: "Mutual funds are categorized as Equity Funds (investing in stocks), Debt Funds (investing in bonds and fixed income securities), Hybrid Funds (mix of equity and debt), and specialized funds like Index Funds, ELSS (tax-saving), and Sector Funds."
+      question: "Why invest in Mutual Funds?",
+      answer: "Mutual funds offer professional management, diversification, liquidity, and the potential for higher returns compared to traditional savings instruments. They're suitable for various investment goals and risk profiles."
     },
     {
-      question: "How do Mutual Funds generate returns?",
-      answer: "Mutual funds generate returns through capital appreciation (increase in the value of underlying securities) and income (dividends from stocks, interest from bonds). The returns are passed on to investors in proportion to their investment."
+      question: "What are the types of Mutual Funds?",
+      answer: "Mutual funds are categorized into equity funds, debt funds, hybrid funds, and solution-oriented funds. Each category serves different investment objectives and risk appetites."
     },
     {
-      question: "What are the risks associated with Mutual Funds?",
-      answer: "Risks vary depending on the fund type. Equity funds carry market risk, debt funds are subject to interest rate and credit risk, while hybrid funds have a combination of both. All mutual funds are also subject to fund manager risk and liquidity risk to varying degrees."
+      question: "How do SIP investments work?",
+      answer: "Systematic Investment Plans (SIP) allow you to invest a fixed amount regularly in mutual funds. This disciplined approach helps in rupee cost averaging and building wealth over time through the power of compounding."
     }
   ];
 
   return (
     <div>
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-gradient-to-b from-[#FCF9F8] to-white">
         <div className="container px-4 mx-auto">
           <div className="flex items-center mb-4 text-sm">
-            <Link to="/" className="text-gray-500 hover:text-[#00BFFF]">Home</Link>
-            <span className="mx-2 text-gray-400">/</span>
-            <span className="text-gray-600">Mutual Funds</span>
+            <Link to="/" className="text-[#3D4E64] hover:text-[#3B9560]">Home</Link>
+            <span className="mx-2 text-[#3D4E64]">/</span>
+            <span className="text-[#213753]">Mutual Funds</span>
           </div>
           
-          <h1 className="mb-4 text-3xl font-bold md:text-4xl text-[#001F3F]">Mutual Funds</h1>
-          <p className="max-w-3xl text-lg text-gray-600">
-            Mutual funds are professionally managed investment vehicles that pool money from multiple investors to invest in various securities. They offer diversification, liquidity, and potential for higher returns.
-          </p>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 items-center">
+            <div>
+              <h1 className="mb-4 text-3xl font-bold md:text-4xl text-[#213753]">Mutual Funds</h1>
+              <p className="text-lg text-[#3D4E64]">
+                Mutual funds are investment vehicles that pool money from multiple investors to purchase a diversified portfolio of securities, managed by professional fund managers.
+              </p>
+              <div className="mt-6 flex space-x-4">
+                <Button className="bg-gradient-to-r from-[#3B9560] to-green-600 hover:from-green-600 hover:to-green-700">
+                  Start SIP
+                </Button>
+                <Button variant="outline" className="border-[#3B9560] text-[#3B9560] hover:bg-[#3B9560]/10">
+                  Learn More
+                </Button>
+              </div>
+            </div>
+            <div className="relative">
+              <img 
+                src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80" 
+                alt="Mutual fund investment" 
+                className="rounded-lg shadow-lg w-full object-cover h-[400px]"
+              />
+              <div className="absolute -bottom-5 -left-5 bg-white p-4 rounded-lg shadow-lg">
+                <p className="text-sm font-semibold text-[#3B9560]">From ₹500/month</p>
+                <p className="text-xs text-[#3D4E64]">Start your SIP journey</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-gradient-to-b from-white to-[#FCF9F8]">
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
             <div className="lg:col-span-3">
               <div className="mb-12">
-                <h2 className="mb-6 text-2xl font-semibold">Understanding Mutual Funds</h2>
-                <div className="space-y-4 text-gray-700">
+                <h2 className="mb-6 text-2xl font-semibold text-[#213753]">Understanding Mutual Funds</h2>
+                <div className="space-y-4 text-[#3D4E64]">
                   <p>
-                    Mutual Funds offer a way to invest in a diversified portfolio of stocks, bonds, or other securities that might be difficult to create individually. They are managed by professional fund managers who make investment decisions on behalf of investors.
+                    Mutual funds are one of the most popular investment options in India, offering professional portfolio management and diversification benefits. They allow individual investors to participate in professionally managed portfolios of stocks, bonds, and other securities.
                   </p>
                   <p>
-                    Whether you're saving for long-term goals like retirement or children's education, or looking for tax-efficient investment options, there's likely a mutual fund scheme suited to your needs.
+                    Through Systematic Investment Plans (SIPs), you can start investing with as little as ₹500 per month, making wealth creation accessible to everyone. The power of compounding, combined with professional fund management, can help you achieve your long-term financial goals.
                   </p>
                   <p>
-                    At Confidence Financial, we help you navigate the complex world of mutual funds. Our expert advisors assess your risk profile, investment horizon, and financial goals to recommend suitable fund options from reputable asset management companies.
+                    At Confidence Financial, we help you select the right mutual funds based on your investment goals, risk tolerance, and time horizon. Our expert advisors guide you through the entire investment journey, from fund selection to portfolio monitoring.
                   </p>
                 </div>
               </div>
@@ -83,30 +105,30 @@ const MutualFunds = () => {
               <ProviderList providers={providers} />
               
               <div className="py-10">
-                <h2 className="mb-6 text-2xl font-semibold">Key Benefits</h2>
+                <h2 className="mb-6 text-2xl font-semibold text-[#213753]">Key Benefits</h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div className="p-5 border border-gray-200 rounded-lg">
-                    <h3 className="mb-3 text-lg font-medium text-[#00BFFF]">Professional Management</h3>
-                    <p className="text-gray-600">
-                      Expert fund managers make informed investment decisions based on research.
+                  <div className="p-5 bg-gradient-to-br from-white to-[#FCF9F8] border border-[#3B9560]/20 rounded-lg hover:shadow-md transition-all">
+                    <h3 className="mb-3 text-lg font-medium text-[#3B9560]">Professional Management</h3>
+                    <p className="text-[#3D4E64]">
+                      Expert fund managers research and manage your investments for optimal returns.
                     </p>
                   </div>
-                  <div className="p-5 border border-gray-200 rounded-lg">
-                    <h3 className="mb-3 text-lg font-medium text-[#00BFFF]">Diversification</h3>
-                    <p className="text-gray-600">
-                      Spread investments across multiple securities to reduce risk.
+                  <div className="p-5 bg-gradient-to-br from-white to-[#FCF9F8] border border-[#3B9560]/20 rounded-lg hover:shadow-md transition-all">
+                    <h3 className="mb-3 text-lg font-medium text-[#3B9560]">Diversification</h3>
+                    <p className="text-[#3D4E64]">
+                      Spread your risk across multiple securities and asset classes.
                     </p>
                   </div>
-                  <div className="p-5 border border-gray-200 rounded-lg">
-                    <h3 className="mb-3 text-lg font-medium text-[#00BFFF]">Liquidity</h3>
-                    <p className="text-gray-600">
-                      Easy to buy and sell units with quick access to your funds.
+                  <div className="p-5 bg-gradient-to-br from-white to-[#FCF9F8] border border-[#3B9560]/20 rounded-lg hover:shadow-md transition-all">
+                    <h3 className="mb-3 text-lg font-medium text-[#3B9560]">Liquidity</h3>
+                    <p className="text-[#3D4E64]">
+                      Easy redemption with most funds offering same-day or next-day liquidity.
                     </p>
                   </div>
-                  <div className="p-5 border border-gray-200 rounded-lg">
-                    <h3 className="mb-3 text-lg font-medium text-[#00BFFF]">Tax Efficiency</h3>
-                    <p className="text-gray-600">
-                      Certain mutual funds offer tax benefits under Section 80C.
+                  <div className="p-5 bg-gradient-to-br from-white to-[#FCF9F8] border border-[#3B9560]/20 rounded-lg hover:shadow-md transition-all">
+                    <h3 className="mb-3 text-lg font-medium text-[#3B9560]">Tax Benefits</h3>
+                    <p className="text-[#3D4E64]">
+                      ELSS funds offer tax deductions under Section 80C with potential for growth.
                     </p>
                   </div>
                 </div>
@@ -116,18 +138,21 @@ const MutualFunds = () => {
             </div>
             <div className="lg:col-span-2">
               <div className="sticky top-24">
-                <InsuranceCalculator type="investment" />
-                
-                <div className="p-6 mt-6 bg-gray-50 rounded-lg">
-                  <h3 className="mb-4 text-lg font-semibold">Need Expert Advice?</h3>
-                  <p className="mb-4 text-gray-600">
-                    Our financial advisors can help you build a mutual fund portfolio aligned with your risk profile and goals.
+                <div className="p-6 mt-6 bg-gradient-to-br from-white to-[#FCF9F8] rounded-lg border border-[#3B9560]/20 shadow-sm">
+                  <h3 className="mb-4 text-lg font-semibold text-[#213753]">Start Your Investment Journey</h3>
+                  <p className="mb-4 text-[#3D4E64]">
+                    Our financial advisors can help you choose the right mutual funds and create a systematic investment plan tailored to your goals.
                   </p>
                   <Link to="/contact">
-                    <Button className="w-full bg-[#001F3F] hover:bg-[#001F3F]/90">
+                    <Button className="w-full bg-gradient-to-r from-[#3B9560] to-green-600 hover:from-green-600 hover:to-green-700">
                       Talk to an Advisor
                     </Button>
                   </Link>
+                  <div className="mt-4 p-3 bg-[#3B9560]/10 border border-[#3B9560]/20 rounded-md">
+                    <p className="text-sm text-[#213753]">
+                      "SIP in mutual funds helped me build a corpus of ₹25 lakhs in just 7 years. The power of compounding is truly amazing!" - Rahul S.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
