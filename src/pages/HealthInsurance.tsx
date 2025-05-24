@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import InsuranceCalculator from "@/components/products/InsuranceCalculator";
+import HealthInsuranceCalculator from "@/components/products/HealthInsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
@@ -89,6 +89,12 @@ const HealthInsurance = () => {
       </section>
 
       <section className="py-12 bg-white">
+        <div className="container px-4 mx-auto">
+          <HealthInsuranceCalculator />
+        </div>
+      </section>
+
+      <section className="py-12 bg-gray-50">
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
             <div className="lg:col-span-3">
@@ -195,8 +201,6 @@ const HealthInsurance = () => {
             </div>
             <div className="lg:col-span-2">
               <div className="sticky top-24">
-                <InsuranceCalculator type="health" />
-                
                 <div className="p-6 mt-6 bg-gradient-to-br from-white to-gray-50 rounded-lg border border-gray-200 shadow-sm">
                   <h3 className="mb-4 text-lg font-semibold">Need Expert Advice?</h3>
                   <p className="mb-4 text-gray-600">
