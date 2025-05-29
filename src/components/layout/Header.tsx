@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -47,42 +47,50 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white border-b border-gray-100 shadow-sm">
-      <div className="container flex items-center justify-between h-14 px-4 mx-auto">
-        <Link to="/" className="flex items-center">
-          <span className="text-xl font-bold text-[#001F3F]">
-            Confidence
-            <span className="font-bold text-[#00BFFF]">Financial</span>
+    <header className="bg-white/90 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise sticky top-0 z-50">
+      <div className="container flex items-center justify-between h-16 px-4 mx-auto">
+        <Link to="/" className="flex items-center space-x-2 group">
+          <div className="w-10 h-10 rounded-full gradient-turquoise flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <Sparkles className="w-6 h-6 text-white" />
+          </div>
+          <span className="text-xl font-bold">
+            <span className="text-turquoise-dark">Confidence</span>
+            <span className="text-turquoise-teal">Financial</span>
           </span>
         </Link>
 
         {!isMobile ? (
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-[#00BFFF]">
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">
               Home
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-[#00BFFF]">
+            <Link to="/about" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">
               About
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
             
             <div className="relative group">
               <button 
-                className="flex items-center text-gray-700 hover:text-[#00BFFF] gap-1"
+                className="flex items-center text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium gap-1 group"
                 onClick={() => toggleCategory("products")}
               >
                 Products
-                <ChevronDown size={16} />
+                <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
               </button>
               
-              <div className="hidden group-hover:block absolute top-full left-0 w-52 bg-white shadow-md rounded-md z-50">
+              <div className="hidden group-hover:block absolute top-full left-0 w-64 bg-white/95 backdrop-blur-md shadow-turquoise rounded-xl border border-turquoise-light/30 z-50 overflow-hidden">
                 {financialProducts.map((category) => (
-                  <div key={category.title} className="border-b border-gray-100 last:border-none">
-                    <div className="p-3 font-medium text-[#001F3F]">{category.title}</div>
+                  <div key={category.title} className="border-b border-turquoise-light/20 last:border-none">
+                    <div className="p-4 font-semibold text-turquoise-dark bg-gradient-to-r from-turquoise-pale to-turquoise-light/30">
+                      {category.title}
+                    </div>
                     {category.items.map((item) => (
                       <Link 
                         key={item.name}
                         to={item.path}
-                        className="block p-3 pl-5 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#00BFFF]"
+                        className="block p-3 pl-6 text-sm text-turquoise-dark hover:bg-gradient-to-r hover:from-turquoise-light/20 hover:to-turquoise-pale/30 hover:text-turquoise-teal transition-all duration-300"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
@@ -93,31 +101,34 @@ const Header = () => {
               </div>
             </div>
             
-            <Link to="/contact" className="text-gray-700 hover:text-[#00BFFF]">
+            <Link to="/contact" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">
               Contact
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Button className="bg-[#00BFFF] hover:bg-[#00BFFF]/90">Get Started</Button>
+            <Button className="gradient-turquoise hover:scale-105 transition-all duration-300 shadow-turquoise text-white font-semibold px-6">
+              Get Started
+            </Button>
           </nav>
         ) : (
-          <button onClick={toggleMenu} className="p-2 md:hidden">
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <button onClick={toggleMenu} className="p-2 md:hidden rounded-lg hover:bg-turquoise-light/20 transition-colors">
+            {isMenuOpen ? <X size={24} className="text-turquoise-dark" /> : <Menu size={24} className="text-turquoise-dark" />}
           </button>
         )}
       </div>
 
       {isMobile && isMenuOpen && (
-        <div className="absolute top-14 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-md md:hidden">
-          <nav className="flex flex-col py-2">
+        <div className="absolute top-16 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise md:hidden">
+          <nav className="flex flex-col py-4">
             <Link
               to="/"
-              className="px-4 py-2 text-gray-700 hover:bg-gray-50"
+              className="px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 hover:text-turquoise-teal transition-all duration-300 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/about"
-              className="px-4 py-2 text-gray-700 hover:bg-gray-50"
+              className="px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 hover:text-turquoise-teal transition-all duration-300 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               About
@@ -125,7 +136,7 @@ const Header = () => {
             
             <div>
               <button 
-                className="flex items-center justify-between w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
+                className="flex items-center justify-between w-full px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 transition-all duration-300 font-medium"
                 onClick={() => toggleCategory("products")}
               >
                 <span>Products</span>
@@ -133,15 +144,15 @@ const Header = () => {
               </button>
               
               {openCategory === "products" && (
-                <div className="bg-gray-50">
+                <div className="bg-gradient-to-r from-turquoise-pale to-turquoise-light/30">
                   {financialProducts.map((category) => (
-                    <div key={category.title} className="border-t border-gray-100">
-                      <div className="px-4 py-2 text-sm font-medium text-gray-700">{category.title}</div>
+                    <div key={category.title} className="border-t border-turquoise-light/30">
+                      <div className="px-6 py-2 text-sm font-semibold text-turquoise-teal">{category.title}</div>
                       {category.items.map((item) => (
                         <Link
                           key={item.name}
                           to={item.path}
-                          className="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100"
+                          className="block px-8 py-2 text-sm text-turquoise-dark hover:bg-turquoise-light/30 hover:text-turquoise-teal transition-all duration-300"
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {item.name}
@@ -155,13 +166,15 @@ const Header = () => {
             
             <Link
               to="/contact"
-              className="px-4 py-2 text-gray-700 hover:bg-gray-50"
+              className="px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 hover:text-turquoise-teal transition-all duration-300 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
             </Link>
-            <div className="px-4 py-2">
-              <Button className="w-full bg-[#00BFFF] hover:bg-[#00BFFF]/90">Get Started</Button>
+            <div className="px-6 py-3">
+              <Button className="w-full gradient-turquoise hover:scale-105 transition-all duration-300 shadow-turquoise text-white font-semibold">
+                Get Started
+              </Button>
             </div>
           </nav>
         </div>

@@ -1,6 +1,9 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -13,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 211 63% 28%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -35,47 +38,39 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Turquoise Waters Palette */
+    --turquoise-dark: #34518D;
+    --turquoise-medium: #8DB8E3;
+    --turquoise-teal: #008266;
+    --turquoise-light: #B7E1D7;
+    --turquoise-pale: #F7F0E8;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -96,6 +91,40 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-['Calibri',sans-serif];
+  }
+}
+
+@layer utilities {
+  .gradient-turquoise {
+    background: linear-gradient(135deg, #34518D 0%, #8DB8E3 50%, #008266 100%);
+  }
+  
+  .gradient-turquoise-light {
+    background: linear-gradient(135deg, #B7E1D7 0%, #F7F0E8 50%, #8DB8E3 100%);
+  }
+  
+  .gradient-card {
+    background: linear-gradient(145deg, rgba(183, 225, 215, 0.1) 0%, rgba(247, 240, 232, 0.8) 100%);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, #34518D 0%, #008266 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .shadow-turquoise {
+    box-shadow: 0 10px 25px -5px rgba(52, 81, 141, 0.2), 0 10px 10px -5px rgba(0, 130, 102, 0.1);
+  }
+  
+  .glow-effect {
+    text-shadow: 0 0 20px rgba(141, 184, 227, 0.5);
+  }
+  
+  .backdrop-turquoise {
+    backdrop-filter: blur(12px);
+    background: rgba(183, 225, 215, 0.15);
   }
 }
