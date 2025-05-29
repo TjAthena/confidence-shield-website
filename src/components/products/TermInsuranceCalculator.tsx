@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Trophy, Heart, Shield, Award } from "lucide-react";
+import { Building2, Trophy, Heart, Shield, Award, Sparkles } from "lucide-react";
+import { calculatePremiums } from "@/utils/termInsuranceCalculations";
 
 interface CalculatorData {
   age: number;
@@ -23,15 +24,16 @@ interface ProviderResult {
   monthlyPremium: number;
   claimSettlement: number;
   logo: React.ReactNode;
+  gradientClass: string;
 }
 
 const TermInsuranceCalculator = () => {
   const [formData, setFormData] = useState<CalculatorData>({
-    age: 22,
+    age: 25,
     gender: "male",
     isSmoker: false,
-    coverageAmountLakh: 50,
-    coverageTillAge: 42,
+    coverageAmountLakh: 100,
+    coverageTillAge: 60,
   });
 
   const [results, setResults] = useState<ProviderResult[]>([]);
@@ -41,99 +43,31 @@ const TermInsuranceCalculator = () => {
     return Math.random() * (99.6 - 97.8) + 97.8;
   };
 
-  const calculatePremiums = () => {
+  const getProviderGradients = () => {
+    return [
+      "from-blue-600 to-blue-700",
+      "from-emerald-600 to-emerald-700", 
+      "from-purple-600 to-purple-700",
+      "from-orange-600 to-orange-700",
+      "from-teal-600 to-teal-700"
+    ];
+  };
+
+  const calculateTermPremiums = () => {
     const sumAssured = formData.coverageAmountLakh * 100000;
-    const saPer1000 = sumAssured / 1000;
-    const isFemale = formData.gender === "female";
-
-    const providers: ProviderResult[] = [];
-
-    // HDFC Life
-    const hdfc = (() => {
-      const baseRate = 0.84;
-      const rate = baseRate * (formData.isSmoker ? 1.35 : 1) * (isFemale ? 0.85 : 1);
-      const rebate = sumAssured >= 1000000 ? 0.95 : 1;
-      const basePremium = saPer1000 * rate * rebate;
-      const annual = basePremium * 1.18;
-      const monthly = (basePremium / 12) * 1.05 * 1.18;
-      return {
-        name: "HDFC Life",
-        annualPremium: annual,
-        monthlyPremium: monthly,
-        claimSettlement: generateClaimSettlement(),
-        logo: <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded flex items-center justify-center text-white text-xs font-bold">H</div>
-      };
-    })();
-
-    // Max Life
-    const maxLife = (() => {
-      const baseRate = 0.44;
-      const rate = baseRate * (formData.isSmoker ? 2.0 : 1) * (isFemale ? 0.85 : 1);
-      const rebate = sumAssured >= 1000000 ? 0.97 : 1;
-      const basePremium = saPer1000 * rate * rebate;
-      const annual = basePremium * 1.18;
-      const monthly = (basePremium / 12) * 1.05 * 1.18;
-      return {
-        name: "Max Life",
-        annualPremium: annual,
-        monthlyPremium: monthly,
-        claimSettlement: generateClaimSettlement(),
-        logo: <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">M</div>
-      };
-    })();
-
-    // ICICI Prudential
-    const icici = (() => {
-      const baseRate = 0.91;
-      const rate = baseRate * (formData.isSmoker ? 1.3 : 1) * (isFemale ? 0.85 : 1);
-      const rebate = sumAssured >= 1000000 ? 0.95 : 1;
-      const basePremium = saPer1000 * rate * rebate;
-      const annual = basePremium * 1.18;
-      const monthly = (basePremium / 12) * 1.05 * 1.18;
-      return {
-        name: "ICICI Prudential",
-        annualPremium: annual,
-        monthlyPremium: monthly,
-        claimSettlement: generateClaimSettlement(),
-        logo: <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded flex items-center justify-center text-white text-xs font-bold">I</div>
-      };
-    })();
-
-    // LIC
-    const lic = (() => {
-      const baseRate = 1.03;
-      const rate = baseRate * (formData.isSmoker ? 1.4 : 1) * (isFemale ? 0.9 : 1);
-      const rebate = sumAssured >= 1000000 ? 0.97 : 1;
-      const basePremium = saPer1000 * rate * rebate;
-      const annual = basePremium * 1.18;
-      const monthly = (basePremium / 12) * 1.07 * 1.18;
-      return {
-        name: "LIC",
-        annualPremium: annual,
-        monthlyPremium: monthly,
-        claimSettlement: generateClaimSettlement(),
-        logo: <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-green-600 rounded flex items-center justify-center text-white text-xs font-bold">L</div>
-      };
-    })();
-
-    // SBI Life
-    const sbiLife = (() => {
-      const baseRate = 0.95;
-      const rate = baseRate * (formData.isSmoker ? 1.5 : 1) * (isFemale ? 0.9 : 1);
-      const rebate = sumAssured >= 1000000 ? 0.95 : 1;
-      const basePremium = saPer1000 * rate * rebate;
-      const annual = basePremium * 1.18;
-      const monthly = (basePremium / 12) * 1.06 * 1.18;
-      return {
-        name: "SBI Life",
-        annualPremium: annual,
-        monthlyPremium: monthly,
-        claimSettlement: generateClaimSettlement(),
-        logo: <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded flex items-center justify-center text-white text-xs font-bold">S</div>
-      };
-    })();
-
-    providers.push(hdfc, maxLife, icici, lic, sbiLife);
+    const premiums = calculatePremiums(formData.age, formData.gender, sumAssured, formData.isSmoker);
+    const gradients = getProviderGradients();
+    
+    const providers: ProviderResult[] = Object.entries(premiums).map(([name, data], index) => ({
+      name,
+      annualPremium: data.annual,
+      monthlyPremium: data.monthly,
+      claimSettlement: generateClaimSettlement(),
+      logo: <div className={`w-10 h-10 bg-gradient-to-r ${gradients[index]} rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg`}>
+        {name.charAt(0)}
+      </div>,
+      gradientClass: gradients[index]
+    }));
 
     // Sort by annual premium (lowest first)
     providers.sort((a, b) => a.annualPremium - b.annualPremium);
@@ -156,85 +90,98 @@ const TermInsuranceCalculator = () => {
       {/* Results Panel - Left Side */}
       <div className="order-2 lg:order-1">
         {showResults ? (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold mb-2 text-[#213753]">
-                Term Insurance Premium Estimates
-              </h3>
-              <p className="text-[#3D4E64]">
+          <div className="space-y-6">
+            <div className="text-center mb-8 p-6 bg-gradient-to-r from-[#213753] via-[#3D4E64] to-[#213753] rounded-xl text-white shadow-xl">
+              <div className="flex items-center justify-center mb-3">
+                <Sparkles className="h-6 w-6 mr-2 text-yellow-300" />
+                <h3 className="text-2xl font-bold">Premium Estimates</h3>
+                <Sparkles className="h-6 w-6 ml-2 text-yellow-300" />
+              </div>
+              <p className="text-blue-100">
                 Coverage: ₹{formData.coverageAmountLakh} Lakhs | Policy Term: {formData.coverageTillAge - formData.age} years
               </p>
+              <div className="mt-3 inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-sm">
+                <Shield className="h-4 w-4 mr-2" />
+                {formData.isSmoker ? "Smoker" : "Non-Smoker"} | {formData.gender === "male" ? "Male" : "Female"} | Age {formData.age}
+              </div>
             </div>
             
             {results.map((provider, index) => (
               <Card 
                 key={provider.name} 
-                className={`relative border transition-all duration-300 hover:shadow-lg border-gray-200 bg-[#FCF9F8] ${
-                  index === 0 ? 'ring-2 ring-[#3B9560]' : ''
+                className={`relative border-2 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] bg-gradient-to-br from-[#FCF9F8] to-white ${
+                  index === 0 ? 'border-[#3B9560] shadow-lg shadow-green-100' : 'border-gray-200 hover:border-[#3B9560]/50'
                 }`}
               >
                 {index === 0 && (
-                  <div className="absolute -top-3 left-4">
-                    <Badge className="bg-gradient-to-r from-[#3B9560] to-green-600 text-white px-3 py-1 flex items-center gap-1">
-                      <Trophy className="h-3 w-3" />
-                      Best Value
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <Badge className="bg-gradient-to-r from-[#3B9560] to-emerald-600 text-white px-6 py-2 text-sm font-semibold shadow-lg">
+                      <Trophy className="h-4 w-4 mr-2" />
+                      Best Value Deal
                     </Badge>
                   </div>
                 )}
                 
                 <CardContent className="p-6">
                   {/* Top Row - Provider Info */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
                       {provider.logo}
                       <div>
-                        <h4 className="font-semibold text-[#213753]">{provider.name}</h4>
-                        <p className="text-sm text-[#3D4E64]">Income proof not required</p>
+                        <h4 className="font-bold text-[#213753] text-lg">{provider.name}</h4>
+                        <p className="text-sm text-[#3D4E64] flex items-center">
+                          <Shield className="h-3 w-3 mr-1 text-[#3B9560]" />
+                          Income proof not required
+                        </p>
                       </div>
                     </div>
-                    <Heart className="h-5 w-5 text-gray-400 hover:text-red-500 cursor-pointer transition-colors" />
+                    <Heart className="h-6 w-6 text-gray-400 hover:text-red-500 cursor-pointer transition-colors duration-300" />
                   </div>
 
-                  {/* Middle Row - Coverage Details */}
-                  <div className="grid grid-cols-3 gap-4 mb-4">
+                  {/* Coverage Details Grid */}
+                  <div className="grid grid-cols-3 gap-6 mb-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-gray-100">
                     <div className="text-center">
-                      <p className="text-sm text-[#3D4E64] mb-1">Life cover</p>
-                      <p className="font-bold text-[#213753]">₹{formData.coverageAmountLakh} Lac</p>
+                      <p className="text-sm text-[#3D4E64] mb-2 font-medium">Life Cover</p>
+                      <p className="font-bold text-[#213753] text-lg">₹{formData.coverageAmountLakh} Lac</p>
+                    </div>
+                    <div className="text-center border-x border-gray-200">
+                      <p className="text-sm text-[#3D4E64] mb-2 font-medium">Cover Till Age</p>
+                      <p className="font-bold text-[#213753] text-lg">{formData.coverageTillAge} Yrs</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-[#3D4E64] mb-1">Cover till age</p>
-                      <p className="font-bold text-[#213753]">{formData.coverageTillAge} Yrs</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm text-[#3D4E64] mb-1">Claim settled</p>
-                      <div className="flex items-center justify-center gap-1">
-                        <Award className="h-3 w-3 text-[#3B9560]" />
-                        <p className="font-bold text-[#213753]">{provider.claimSettlement.toFixed(1)}%</p>
+                      <p className="text-sm text-[#3D4E64] mb-2 font-medium">Claim Settled</p>
+                      <div className="flex items-center justify-center gap-2">
+                        <Award className="h-4 w-4 text-[#3B9560]" />
+                        <p className="font-bold text-[#213753] text-lg">{provider.claimSettlement.toFixed(1)}%</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Features Row */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-1">
-                      <Shield className="h-4 w-4 text-[#3B9560]" />
-                      <span className="text-sm text-[#3B9560] font-medium">5% discount included</span>
+                  <div className="flex items-center justify-between mb-6 p-3 bg-gradient-to-r from-[#3B9560]/10 to-emerald-50 rounded-lg border border-[#3B9560]/20">
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-[#3B9560]" />
+                      <span className="text-sm text-[#3B9560] font-semibold">5% discount included</span>
                     </div>
-                    <button className="text-sm text-[#3B9560] hover:underline">See how</button>
+                    <button className="text-sm text-[#3B9560] hover:text-[#213753] hover:underline font-medium transition-colors">
+                      See how →
+                    </button>
                   </div>
 
-                  {/* Premium Row */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-sm text-[#3D4E64] mb-1">
-                        Annual: <span className="font-bold text-[#213753]">{formatCurrency(provider.annualPremium)}</span>
+                  {/* Premium & CTA Row */}
+                  <div className="flex items-center justify-between p-4 bg-gradient-to-r from-white to-gray-50 rounded-lg border border-gray-200">
+                    <div className="space-y-2">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm text-[#3D4E64] font-medium">Annual:</span>
+                        <span className="font-bold text-[#213753] text-xl">{formatCurrency(provider.annualPremium)}</span>
                       </div>
-                      <div className="text-sm text-[#3D4E64]">
-                        Monthly: <span className="font-bold text-[#213753]">{formatCurrency(provider.monthlyPremium)}</span>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm text-[#3D4E64] font-medium">Monthly:</span>
+                        <span className="font-bold text-[#213753] text-lg">{formatCurrency(provider.monthlyPremium)}</span>
                       </div>
                     </div>
                     <Button 
-                      className="bg-gradient-to-r from-[#3B9560] to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-2 rounded-lg transition-all"
+                      className={`bg-gradient-to-r ${provider.gradientClass} hover:shadow-lg text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 font-semibold`}
                       onClick={() => window.open('https://gocfs.com', '_blank')}
                     >
                       Get Assistance
@@ -244,21 +191,24 @@ const TermInsuranceCalculator = () => {
               </Card>
             ))}
             
-            <div className="text-xs text-[#3D4E64] text-center mt-4">
-              * Premiums are estimates based on standard rates. Actual premiums may vary based on 
+            <div className="text-xs text-[#3D4E64] text-center mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-gray-200">
+              <Shield className="h-4 w-4 inline mr-2 text-[#3B9560]" />
+              * Premiums calculated using advanced mortality rate tables. Actual premiums may vary based on 
               medical underwriting and insurer-specific criteria. GST included.
             </div>
           </div>
         ) : (
-          <Card className="border-2 border-dashed border-gray-300 bg-[#FCF9F8]">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Building2 className="h-12 w-12 text-[#3D4E64] mb-4" />
-              <h3 className="text-lg font-medium text-[#213753] mb-2">
+          <Card className="border-2 border-dashed border-[#3B9560]/30 bg-gradient-to-br from-[#FCF9F8] to-white shadow-lg">
+            <CardContent className="flex flex-col items-center justify-center py-16">
+              <div className="w-20 h-20 bg-gradient-to-r from-[#3B9560] to-emerald-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                <Building2 className="h-10 w-10 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-[#213753] mb-3">
                 Ready to Calculate Premiums?
               </h3>
-              <p className="text-[#3D4E64] text-center">
-                Fill in your details in the form and click "Calculate Premium" to see 
-                estimated quotes from top insurance providers.
+              <p className="text-[#3D4E64] text-center max-w-md leading-relaxed">
+                Fill in your details and click "Calculate Premium" to see 
+                estimated quotes from top insurance providers using advanced mortality calculations.
               </p>
             </CardContent>
           </Card>
@@ -267,15 +217,19 @@ const TermInsuranceCalculator = () => {
 
       {/* Form Panel - Right Side */}
       <div className="order-1 lg:order-2">
-        <Card className="border border-gray-200 hover:shadow-lg transition-all duration-300 bg-[#FCF9F8]">
-          <CardHeader className="bg-gradient-to-r from-[#213753] to-[#3D4E64]">
-            <CardTitle className="text-xl text-white">
+        <Card className="border-2 border-[#3B9560]/20 hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#FCF9F8] to-white shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-[#213753] via-[#3D4E64] to-[#213753] rounded-t-lg">
+            <CardTitle className="text-xl text-white flex items-center">
+              <Sparkles className="h-5 w-5 mr-2" />
               Calculate Your Premium
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 pt-6">
-            <div className="space-y-2">
-              <Label htmlFor="age" className="text-sm font-medium text-[#213753]">Age</Label>
+            <div className="space-y-3">
+              <Label htmlFor="age" className="text-sm font-semibold text-[#213753] flex items-center">
+                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+                Age
+              </Label>
               <Input
                 id="age"
                 type="number"
@@ -283,17 +237,20 @@ const TermInsuranceCalculator = () => {
                 max="65"
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
-                className="border-gray-300 focus:border-[#3B9560] bg-white"
+                className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg transition-colors"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-[#213753]">Gender</Label>
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-[#213753] flex items-center">
+                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+                Gender
+              </Label>
               <Select 
                 value={formData.gender} 
                 onValueChange={(value: "male" | "female") => setFormData({ ...formData, gender: value })}
               >
-                <SelectTrigger className="border-gray-300 focus:border-[#3B9560] bg-white">
+                <SelectTrigger className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
@@ -303,20 +260,27 @@ const TermInsuranceCalculator = () => {
               </Select>
             </div>
 
-            <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium text-[#213753]">Smoker</Label>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-[#3D4E64]">No</span>
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-gray-200">
+              <Label className="text-sm font-semibold text-[#213753] flex items-center">
+                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+                Smoker
+              </Label>
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-[#3D4E64] font-medium">No</span>
                 <Switch
                   checked={formData.isSmoker}
                   onCheckedChange={(checked) => setFormData({ ...formData, isSmoker: checked })}
+                  className="data-[state=checked]:bg-[#3B9560]"
                 />
-                <span className="text-sm text-[#3D4E64]">Yes</span>
+                <span className="text-sm text-[#3D4E64] font-medium">Yes</span>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="coverage" className="text-sm font-medium text-[#213753]">Coverage Amount (₹ Lakhs)</Label>
+            <div className="space-y-3">
+              <Label htmlFor="coverage" className="text-sm font-semibold text-[#213753] flex items-center">
+                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+                Coverage Amount (₹ Lakhs)
+              </Label>
               <Input
                 id="coverage"
                 type="number"
@@ -324,13 +288,16 @@ const TermInsuranceCalculator = () => {
                 max="1000"
                 value={formData.coverageAmountLakh}
                 onChange={(e) => setFormData({ ...formData, coverageAmountLakh: parseInt(e.target.value) || 0 })}
-                className="border-gray-300 focus:border-[#3B9560] bg-white"
+                className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg transition-colors"
                 placeholder="e.g., 50 for ₹50 Lakhs"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="coverageTill" className="text-sm font-medium text-[#213753]">Coverage Till Age</Label>
+            <div className="space-y-3">
+              <Label htmlFor="coverageTill" className="text-sm font-semibold text-[#213753] flex items-center">
+                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+                Coverage Till Age
+              </Label>
               <Input
                 id="coverageTill"
                 type="number"
@@ -338,18 +305,19 @@ const TermInsuranceCalculator = () => {
                 max="75"
                 value={formData.coverageTillAge}
                 onChange={(e) => setFormData({ ...formData, coverageTillAge: parseInt(e.target.value) || 0 })}
-                className="border-gray-300 focus:border-[#3B9560] bg-white"
+                className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg transition-colors"
               />
-              <p className="text-xs text-[#3D4E64]">
+              <p className="text-xs text-[#3D4E64] bg-blue-50 p-2 rounded border border-blue-200">
                 Policy Term: {formData.coverageTillAge - formData.age} years
               </p>
             </div>
 
             <Button 
-              onClick={calculatePremiums}
-              className="w-full bg-gradient-to-r from-[#3B9560] to-green-600 hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-[1.02] duration-200 text-white"
+              onClick={calculateTermPremiums}
+              className="w-full bg-gradient-to-r from-[#3B9560] to-emerald-600 hover:from-emerald-600 hover:to-[#3B9560] transition-all transform hover:scale-[1.02] duration-300 text-white font-semibold py-4 rounded-lg shadow-lg"
               size="lg"
             >
+              <Sparkles className="h-5 w-5 mr-2" />
               Calculate Premium
             </Button>
           </CardContent>
