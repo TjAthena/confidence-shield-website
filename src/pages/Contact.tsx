@@ -74,7 +74,7 @@ const Contact = () => {
     { icon: Facebook, name: "Facebook", color: "blue" },
     { icon: Instagram, name: "Instagram", color: "cyan" },
     { icon: Linkedin, name: "LinkedIn", color: "blue" },
-    { icon: Youtube, name: "YouTube", color: "red" }
+    { icon: Youtube, name: "YouTube", color: "green" }
   ];
   
   return (
@@ -254,7 +254,7 @@ const Contact = () => {
               <div className="lg:col-span-1">
                 <Card className="bg-white/90 backdrop-blur-sm border-cyan-200 shadow-2xl">
                   <CardContent className="p-8">
-                    <h3 className="mb-6 text-2xl font-bold text-blue-900">Connect With Us</h3>
+                    <h3 className="mb-6 text-2xl font-bold text-blue-900">Our Social Media Contacts and Pages</h3>
                     <p className="mb-8 text-gray-700">Follow us on social media for updates and financial tips.</p>
                     
                     <div className="space-y-4">
@@ -268,7 +268,7 @@ const Contact = () => {
                             social.color === 'green' ? 'bg-gradient-to-br from-green-500 to-green-600' :
                             social.color === 'blue' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
                             social.color === 'cyan' ? 'bg-gradient-to-br from-cyan-500 to-cyan-600' :
-                            'bg-gradient-to-br from-red-500 to-red-600'
+                            'bg-gradient-to-br from-blue-500 to-blue-600'
                           } group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                             <social.icon className="w-6 h-6 text-white" />
                           </div>
@@ -304,7 +304,7 @@ const Contact = () => {
         </div>
       </section>
 
-      <style jsx>{`
+      <style>{`
         .glow {
           text-shadow: 0 0 20px rgba(103, 232, 249, 0.5);
         }

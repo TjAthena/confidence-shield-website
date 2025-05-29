@@ -2,7 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Users, Target, Eye, Heart, Award, TrendingUp } from "lucide-react";
+import { Users, Target, Eye, Heart, Award, TrendingUp, Shield, DollarSign, Home, Car, Briefcase, PiggyBank } from "lucide-react";
 
 const About = () => {
   const teamMembers = [
@@ -10,14 +10,14 @@ const About = () => {
       id: 1,
       name: "SB Kirubakaran",
       role: "Chief Executive Officer",
-      bio: "With over 23 years of accomplished leadership in Sales & Distribution, with a strong specialization in Insurance and investment products, Financial Planning, Strategic Planning, Business Development, and Client Relationship Management.",
+      bio: "With over 23 years of accomplished leadership in Sales & Distribution, with a strong specialization in Insurance and investment products, Financial Planning, Strategic Planning, Business Development, and Client Relationship Management. His extensive experience spans across Insurance, Financial Services, Banking and E-Commerce, where he has consistently driven growth through innovative strategies and result-oriented execution and commitment to excellence.",
       experience: "23+ Years"
     },
     {
       id: 2,
       name: "Allen Godfrey A",
       role: "Executive Director",
-      bio: "Allen brings over 14 years of extensive experience in sales and marketing, with a strong specialization in insurance and investment products. His career is defined by a consistent ability to drive revenue growth.",
+      bio: "Allen brings over 14 years of extensive experience in sales and marketing, with a strong specialization in insurance and investment products. His career is defined by a consistent ability to drive revenue growth through the development and execution of strategic sales initiatives and targeted marketing campaigns.",
       experience: "14+ Years"
     }
   ];
@@ -32,28 +32,34 @@ const About = () => {
 
   const services = [
     {
+      icon: DollarSign,
       title: "Financial Planning",
-      description: "Personalized financial planning services including wealth management, retirement planning, and tax-saving strategies."
+      description: "Personalized financial planning services including wealth management, retirement planning, and tax-saving strategies to help clients achieve long-term stability and growth."
     },
     {
+      icon: Shield,
       title: "Life Insurance",
-      description: "Protection plans, term insurance, endowment policies, and savings-linked life insurance solutions."
+      description: "Protection plans, term insurance, endowment policies, and savings-linked life insurance solutions designed to secure your family's future and support long-term financial goals."
     },
     {
+      icon: Heart,
       title: "Health Insurance",
-      description: "Comprehensive medical insurance policies, including individual and family floater plans, critical illness coverage."
+      description: "Comprehensive medical insurance policies, including individual and family floater plans, critical illness coverage, and top-up options to safeguard against rising healthcare costs."
     },
     {
+      icon: Car,
       title: "Motor Insurance",
-      description: "Tailored two-wheeler and four-wheeler insurance plans, covering third-party liability and own damage."
+      description: "Tailored two-wheeler and four-wheeler insurance plans, covering third-party liability, own damage, and add-on services for complete vehicle protection."
     },
     {
+      icon: Home,
       title: "General Insurance",
-      description: "Wide array of coverage solutions including travel, home, personal accident, and commercial insurance."
+      description: "A wide array of coverage solutions including travel insurance, home insurance, personal accident policies, and commercial insurance for businesses."
     },
     {
+      icon: PiggyBank,
       title: "Mutual Funds",
-      description: "Expertly curated mutual fund investment options across equity, debt, hybrid, and tax-saving categories."
+      description: "Expertly curated mutual fund investment options across equity, debt, hybrid, and tax-saving categories, aligned with individual risk profiles and financial goals."
     }
   ];
 
@@ -78,6 +84,13 @@ const About = () => {
       title: "Community",
       description: "We believe in giving back to society, supporting those in need, and upholding our corporate social responsibility."
     }
+  ];
+
+  const goals = [
+    "Achieve Pan-India presence within two years",
+    "Grow assets and investments in alignment with our business expansion",
+    "Establish a reputation for fair practices and transparent processes",
+    "Become a key and trusted player in the industry"
   ];
 
   return (
@@ -106,7 +119,7 @@ const About = () => {
         <div className="container px-4 mx-auto">
           <div className="max-w-6xl mx-auto">
             <div className="mb-16 text-center">
-              <h2 className="mb-8 text-4xl font-bold text-blue-900">Our Story</h2>
+              <h2 className="mb-8 text-4xl font-bold text-blue-900">About Confidence Financial Services</h2>
               <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                 <p className="mb-6 text-lg">
                   Confidence Financial Services is a Chennai-based financial solutions firm, established with a commitment to deliver reliable, customer-centric services across the banking and financial sector. Serving clients across Tamil Nadu - India, we specialize in Insurance Marketing, Mutual Fund Distribution, and the Sales & Service of a comprehensive range of Banking and Financial Products.
@@ -133,7 +146,7 @@ const About = () => {
                 <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-cyan-200 hover:border-blue-400 bg-white/80 backdrop-blur-sm">
                   <CardContent className="p-6">
                     <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <div className="w-8 h-8 bg-white rounded-full"></div>
+                      <service.icon className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="mb-3 text-xl font-bold text-center text-blue-900">{service.title}</h3>
                     <p className="text-gray-700 text-center leading-relaxed">{service.description}</p>
@@ -149,7 +162,7 @@ const About = () => {
       <section className="py-16 bg-white">
         <div className="container px-4 mx-auto">
           <div className="max-w-6xl mx-auto">
-            <h2 className="mb-12 text-4xl font-bold text-center text-blue-900">Our Leadership Team</h2>
+            <h2 className="mb-12 text-4xl font-bold text-center text-blue-900">Our Team</h2>
             <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
               {teamMembers.map(member => (
                 <Card key={member.id} className="group hover:shadow-2xl transition-all duration-300 border-cyan-200 hover:border-blue-400 bg-gradient-to-br from-white to-blue-50">
@@ -195,7 +208,7 @@ const About = () => {
       <section className="py-16 bg-white">
         <div className="container px-4 mx-auto">
           <div className="max-w-6xl mx-auto">
-            <h2 className="mb-12 text-4xl font-bold text-center text-blue-900">Our Core Values</h2>
+            <h2 className="mb-12 text-4xl font-bold text-center text-blue-900">Core Values</h2>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {coreValues.map((value, index) => (
                 <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-cyan-200 hover:border-blue-400 bg-gradient-to-br from-white to-cyan-50">
@@ -221,10 +234,21 @@ const About = () => {
         </div>
         <div className="container px-4 mx-auto relative z-10">
           <div className="max-w-6xl mx-auto">
+            <h2 className="mb-12 text-4xl font-bold text-center text-white">Company Strategy</h2>
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
               <Card className="bg-white/95 backdrop-blur-sm border-cyan-200 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
                   <Target className="w-16 h-16 mx-auto mb-4 text-blue-600" />
+                  <h3 className="mb-4 text-2xl font-bold text-blue-900">Purpose</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    To be a leader in Insurance, Financial Products Marketing and Distribution Services by delivering state-of-the-art solutions, fostering strong client relationships, and driving sustainable profitability.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white/95 backdrop-blur-sm border-cyan-200 hover:shadow-2xl transition-all duration-300">
+                <CardContent className="p-8 text-center">
+                  <Eye className="w-16 h-16 mx-auto mb-4 text-cyan-600" />
                   <h3 className="mb-4 text-2xl font-bold text-blue-900">Vision</h3>
                   <p className="text-gray-700 leading-relaxed">
                     To consistently provide top-notch services and best-in-class products that exceed customer expectations.
@@ -234,23 +258,34 @@ const About = () => {
               
               <Card className="bg-white/95 backdrop-blur-sm border-cyan-200 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
-                  <Eye className="w-16 h-16 mx-auto mb-4 text-cyan-600" />
+                  <Award className="w-16 h-16 mx-auto mb-4 text-green-600" />
                   <h3 className="mb-4 text-2xl font-bold text-blue-900">Mission</h3>
                   <p className="text-gray-700 leading-relaxed">
                     To build lifelong relationships with our customers, offering exceptional service through continuous innovation, technology-driven solutions, and a customer-first approach.
                   </p>
                 </CardContent>
               </Card>
-              
-              <Card className="bg-white/95 backdrop-blur-sm border-cyan-200 hover:shadow-2xl transition-all duration-300">
-                <CardContent className="p-8 text-center">
-                  <Award className="w-16 h-16 mx-auto mb-4 text-green-600" />
-                  <h3 className="mb-4 text-2xl font-bold text-blue-900">Purpose</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    To be a leader in Insurance, Financial Products Marketing and Distribution Services by delivering state-of-the-art solutions.
-                  </p>
-                </CardContent>
-              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Goals Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div className="container px-4 mx-auto">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="mb-12 text-4xl font-bold text-center text-blue-900">Goals</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {goals.map((goal, index) => (
+                <div key={index} className="p-6 bg-white/80 backdrop-blur-sm rounded-lg border border-cyan-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                      <span className="text-white font-bold text-sm">{index + 1}</span>
+                    </div>
+                    <p className="text-gray-700 font-medium">{goal}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -273,7 +308,7 @@ const About = () => {
         </div>
       </section>
 
-      <style jsx>{`
+      <style>{`
         .glow {
           text-shadow: 0 0 20px rgba(103, 232, 249, 0.5);
         }
