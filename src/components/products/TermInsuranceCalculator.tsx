@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Trophy, Heart, Shield, Award, Sparkles } from "lucide-react";
+import { Building2, Trophy, Heart, Shield, Award, Sparkles, Zap, Star } from "lucide-react";
 import { calculatePremiums } from "@/utils/termInsuranceCalculations";
 
 interface CalculatorData {
@@ -45,11 +45,11 @@ const TermInsuranceCalculator = () => {
 
   const getProviderGradients = () => {
     return [
-      "from-blue-600 to-blue-700",
-      "from-emerald-600 to-emerald-700", 
-      "from-purple-600 to-purple-700",
-      "from-orange-600 to-orange-700",
-      "from-teal-600 to-teal-700"
+      "from-emerald-500 via-teal-500 to-cyan-500",
+      "from-blue-500 via-indigo-500 to-purple-500", 
+      "from-pink-500 via-rose-500 to-red-500",
+      "from-orange-500 via-amber-500 to-yellow-500",
+      "from-violet-500 via-purple-500 to-indigo-500"
     ];
   };
 
@@ -63,7 +63,7 @@ const TermInsuranceCalculator = () => {
       annualPremium: data.annual,
       monthlyPremium: data.monthly,
       claimSettlement: generateClaimSettlement(),
-      logo: <div className={`w-10 h-10 bg-gradient-to-r ${gradients[index]} rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg`}>
+      logo: <div className={`w-12 h-12 bg-gradient-to-br ${gradients[index]} rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-2xl border border-white/20 backdrop-blur-sm`}>
         {name.charAt(0)}
       </div>,
       gradientClass: gradients[index]
@@ -86,127 +86,156 @@ const TermInsuranceCalculator = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-screen">
       {/* Results Panel - Left Side */}
       <div className="order-2 lg:order-1">
         {showResults ? (
           <div className="space-y-6">
-            <div className="text-center mb-8 p-6 bg-gradient-to-r from-[#213753] via-[#3D4E64] to-[#213753] rounded-xl text-white shadow-xl">
-              <div className="flex items-center justify-center mb-3">
-                <Sparkles className="h-6 w-6 mr-2 text-yellow-300" />
-                <h3 className="text-2xl font-bold">Premium Estimates</h3>
-                <Sparkles className="h-6 w-6 ml-2 text-yellow-300" />
-              </div>
-              <p className="text-blue-100">
-                Coverage: ₹{formData.coverageAmountLakh} Lakhs | Policy Term: {formData.coverageTillAge - formData.age} years
-              </p>
-              <div className="mt-3 inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-sm">
-                <Shield className="h-4 w-4 mr-2" />
-                {formData.isSmoker ? "Smoker" : "Non-Smoker"} | {formData.gender === "male" ? "Male" : "Female"} | Age {formData.age}
+            <div className="text-center mb-8 p-8 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-2xl text-white shadow-2xl border border-white/20 backdrop-blur-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 animate-pulse"></div>
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm border border-white/30 shadow-lg">
+                    <Sparkles className="h-8 w-8 text-yellow-300 animate-pulse" />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                  Premium Estimates
+                </h3>
+                <p className="text-blue-100 text-lg font-medium">
+                  Coverage: ₹{formData.coverageAmountLakh} Lakhs | Policy Term: {formData.coverageTillAge - formData.age} years
+                </p>
+                <div className="mt-4 inline-flex items-center px-6 py-3 bg-white/20 rounded-full text-sm backdrop-blur-sm border border-white/30 shadow-lg">
+                  <Shield className="h-5 w-5 mr-3 text-emerald-300" />
+                  {formData.isSmoker ? "Smoker" : "Non-Smoker"} | {formData.gender === "male" ? "Male" : "Female"} | Age {formData.age}
+                </div>
               </div>
             </div>
             
             {results.map((provider, index) => (
               <Card 
                 key={provider.name} 
-                className={`relative border-2 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] bg-gradient-to-br from-[#FCF9F8] to-white ${
-                  index === 0 ? 'border-[#3B9560] shadow-lg shadow-green-100' : 'border-gray-200 hover:border-[#3B9560]/50'
-                }`}
+                className={`relative border-2 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] bg-gradient-to-br from-white/95 via-white/90 to-white/95 backdrop-blur-lg ${
+                  index === 0 ? 'border-emerald-400 shadow-2xl shadow-emerald-200/50' : 'border-gray-200/50 hover:border-purple-400/50'
+                } overflow-hidden`}
               >
                 {index === 0 && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                    <Badge className="bg-gradient-to-r from-[#3B9560] to-emerald-600 text-white px-6 py-2 text-sm font-semibold shadow-lg">
-                      <Trophy className="h-4 w-4 mr-2" />
-                      Best Value Deal
+                    <Badge className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white px-8 py-3 text-sm font-bold shadow-2xl border border-white/30 backdrop-blur-sm animate-pulse">
+                      <Trophy className="h-5 w-5 mr-2" />
+                      🏆 Best Value Deal
                     </Badge>
                   </div>
                 )}
                 
-                <CardContent className="p-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-50/30 via-purple-50/20 to-pink-50/30 opacity-50"></div>
+                
+                <CardContent className="p-8 relative z-10">
                   {/* Top Row - Provider Info */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      {provider.logo}
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-5">
+                      <div className="relative">
+                        {provider.logo}
+                        <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 rounded-xl blur-lg animate-pulse"></div>
+                      </div>
                       <div>
-                        <h4 className="font-bold text-[#213753] text-lg">{provider.name}</h4>
-                        <p className="text-sm text-[#3D4E64] flex items-center">
-                          <Shield className="h-3 w-3 mr-1 text-[#3B9560]" />
+                        <h4 className="font-bold text-gray-800 text-xl mb-1">{provider.name}</h4>
+                        <p className="text-sm text-gray-600 flex items-center font-medium">
+                          <Zap className="h-4 w-4 mr-2 text-emerald-500" />
                           Income proof not required
                         </p>
                       </div>
                     </div>
-                    <Heart className="h-6 w-6 text-gray-400 hover:text-red-500 cursor-pointer transition-colors duration-300" />
+                    <Heart className="h-7 w-7 text-gray-400 hover:text-red-500 cursor-pointer transition-all duration-300 hover:scale-110" />
                   </div>
 
                   {/* Coverage Details Grid */}
-                  <div className="grid grid-cols-3 gap-6 mb-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-gray-100">
+                  <div className="grid grid-cols-3 gap-6 mb-8 p-6 bg-gradient-to-r from-gray-50/80 via-blue-50/60 to-purple-50/80 rounded-xl border border-gray-200/50 backdrop-blur-sm shadow-lg">
                     <div className="text-center">
-                      <p className="text-sm text-[#3D4E64] mb-2 font-medium">Life Cover</p>
-                      <p className="font-bold text-[#213753] text-lg">₹{formData.coverageAmountLakh} Lac</p>
+                      <p className="text-sm text-gray-600 mb-3 font-semibold">Life Cover</p>
+                      <p className="font-bold text-gray-800 text-xl">₹{formData.coverageAmountLakh} Lac</p>
                     </div>
-                    <div className="text-center border-x border-gray-200">
-                      <p className="text-sm text-[#3D4E64] mb-2 font-medium">Cover Till Age</p>
-                      <p className="font-bold text-[#213753] text-lg">{formData.coverageTillAge} Yrs</p>
+                    <div className="text-center border-x border-gray-300/50">
+                      <p className="text-sm text-gray-600 mb-3 font-semibold">Cover Till Age</p>
+                      <p className="font-bold text-gray-800 text-xl">{formData.coverageTillAge} Yrs</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-[#3D4E64] mb-2 font-medium">Claim Settled</p>
+                      <p className="text-sm text-gray-600 mb-3 font-semibold">Claim Settled</p>
                       <div className="flex items-center justify-center gap-2">
-                        <Award className="h-4 w-4 text-[#3B9560]" />
-                        <p className="font-bold text-[#213753] text-lg">{provider.claimSettlement.toFixed(1)}%</p>
+                        <Star className="h-5 w-5 text-yellow-500" />
+                        <p className="font-bold text-gray-800 text-xl">{provider.claimSettlement.toFixed(1)}%</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Features Row */}
-                  <div className="flex items-center justify-between mb-6 p-3 bg-gradient-to-r from-[#3B9560]/10 to-emerald-50 rounded-lg border border-[#3B9560]/20">
-                    <div className="flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-[#3B9560]" />
-                      <span className="text-sm text-[#3B9560] font-semibold">5% discount included</span>
+                  <div className="flex items-center justify-between mb-8 p-4 bg-gradient-to-r from-emerald-100/80 via-teal-100/60 to-cyan-100/80 rounded-xl border border-emerald-200/50 backdrop-blur-sm shadow-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-emerald-500/20 rounded-lg">
+                        <Shield className="h-6 w-6 text-emerald-600" />
+                      </div>
+                      <span className="text-sm text-emerald-700 font-bold">5% discount included</span>
                     </div>
-                    <button className="text-sm text-[#3B9560] hover:text-[#213753] hover:underline font-medium transition-colors">
-                      See how →
+                    <button className="text-sm text-emerald-600 hover:text-emerald-800 hover:underline font-bold transition-colors group">
+                      See how 
+                      <span className="inline-block transition-transform group-hover:translate-x-1 ml-1">→</span>
                     </button>
                   </div>
 
                   {/* Premium & CTA Row */}
-                  <div className="flex items-center justify-between p-4 bg-gradient-to-r from-white to-gray-50 rounded-lg border border-gray-200">
-                    <div className="space-y-2">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm text-[#3D4E64] font-medium">Annual:</span>
-                        <span className="font-bold text-[#213753] text-xl">{formatCurrency(provider.annualPremium)}</span>
+                  <div className="flex items-center justify-between p-6 bg-gradient-to-r from-white/90 via-gray-50/80 to-white/90 rounded-xl border border-gray-200/50 backdrop-blur-sm shadow-xl">
+                    <div className="space-y-3">
+                      <div className="flex items-baseline gap-3">
+                        <span className="text-sm text-gray-600 font-semibold">Annual:</span>
+                        <span className="font-bold text-gray-800 text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                          {formatCurrency(provider.annualPremium)}
+                        </span>
                       </div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm text-[#3D4E64] font-medium">Monthly:</span>
-                        <span className="font-bold text-[#213753] text-lg">{formatCurrency(provider.monthlyPremium)}</span>
+                      <div className="flex items-baseline gap-3">
+                        <span className="text-sm text-gray-600 font-semibold">Monthly:</span>
+                        <span className="font-bold text-gray-800 text-xl bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                          {formatCurrency(provider.monthlyPremium)}
+                        </span>
                       </div>
                     </div>
                     <Button 
-                      className={`bg-gradient-to-r ${provider.gradientClass} hover:shadow-lg text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 font-semibold`}
+                      className={`bg-gradient-to-r ${provider.gradientClass} hover:shadow-2xl text-white px-10 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 font-bold text-lg shadow-lg border border-white/20 backdrop-blur-sm relative overflow-hidden group`}
                       onClick={() => window.open('https://gocfs.com', '_blank')}
                     >
-                      Get Assistance
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <Sparkles className="h-5 w-5 mr-2 relative z-10" />
+                      <span className="relative z-10">Get Assistance</span>
                     </Button>
                   </div>
                 </CardContent>
               </Card>
             ))}
             
-            <div className="text-xs text-[#3D4E64] text-center mt-6 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-gray-200">
-              <Shield className="h-4 w-4 inline mr-2 text-[#3B9560]" />
-              * Premiums calculated using advanced mortality rate tables. Actual premiums may vary based on 
-              medical underwriting and insurer-specific criteria. GST included.
+            <div className="text-xs text-gray-600 text-center mt-8 p-6 bg-gradient-to-r from-gray-50/80 via-blue-50/60 to-purple-50/80 rounded-xl border border-gray-200/50 backdrop-blur-sm shadow-lg">
+              <div className="flex items-center justify-center mb-2">
+                <Shield className="h-5 w-5 mr-2 text-emerald-500" />
+                <span className="font-semibold text-gray-700">Premium Calculation Disclaimer</span>
+              </div>
+              <p className="leading-relaxed">
+                * Premiums calculated using advanced mortality rate tables. Actual premiums may vary based on 
+                medical underwriting and insurer-specific criteria. GST included.
+              </p>
             </div>
           </div>
         ) : (
-          <Card className="border-2 border-dashed border-[#3B9560]/30 bg-gradient-to-br from-[#FCF9F8] to-white shadow-lg">
-            <CardContent className="flex flex-col items-center justify-center py-16">
-              <div className="w-20 h-20 bg-gradient-to-r from-[#3B9560] to-emerald-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
-                <Building2 className="h-10 w-10 text-white" />
+          <Card className="border-2 border-dashed border-purple-300/50 bg-gradient-to-br from-white/95 via-purple-50/30 to-white/95 shadow-2xl backdrop-blur-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/20 via-purple-100/20 to-pink-100/20 animate-pulse"></div>
+            <CardContent className="flex flex-col items-center justify-center py-20 relative z-10">
+              <div className="relative mb-8">
+                <div className="w-24 h-24 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 rounded-full flex items-center justify-center shadow-2xl border border-white/30 backdrop-blur-sm">
+                  <Building2 className="h-12 w-12 text-white" />
+                </div>
+                <div className="absolute -inset-4 bg-gradient-to-r from-purple-400/30 to-pink-400/30 rounded-full blur-xl animate-pulse"></div>
               </div>
-              <h3 className="text-xl font-bold text-[#213753] mb-3">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Ready to Calculate Premiums?
               </h3>
-              <p className="text-[#3D4E64] text-center max-w-md leading-relaxed">
+              <p className="text-gray-600 text-center max-w-md leading-relaxed font-medium">
                 Fill in your details and click "Calculate Premium" to see 
                 estimated quotes from top insurance providers using advanced mortality calculations.
               </p>
@@ -217,17 +246,23 @@ const TermInsuranceCalculator = () => {
 
       {/* Form Panel - Right Side */}
       <div className="order-1 lg:order-2">
-        <Card className="border-2 border-[#3B9560]/20 hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#FCF9F8] to-white shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-[#213753] via-[#3D4E64] to-[#213753] rounded-t-lg">
-            <CardTitle className="text-xl text-white flex items-center">
-              <Sparkles className="h-5 w-5 mr-2" />
+        <Card className="border-2 border-purple-200/50 hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-white/95 via-purple-50/30 to-white/95 shadow-xl backdrop-blur-lg relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/10 via-purple-100/10 to-pink-100/10"></div>
+          
+          <CardHeader className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 rounded-t-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 animate-pulse"></div>
+            <CardTitle className="text-2xl text-white flex items-center relative z-10">
+              <div className="p-2 bg-white/20 rounded-lg mr-3 backdrop-blur-sm border border-white/30">
+                <Sparkles className="h-6 w-6" />
+              </div>
               Calculate Your Premium
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 pt-6">
-            <div className="space-y-3">
-              <Label htmlFor="age" className="text-sm font-semibold text-[#213753] flex items-center">
-                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+          
+          <CardContent className="space-y-8 pt-8 relative z-10">
+            <div className="space-y-4">
+              <Label htmlFor="age" className="text-sm font-bold text-gray-700 flex items-center">
+                <span className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mr-3 shadow-lg"></span>
                 Age
               </Label>
               <Input
@@ -237,48 +272,48 @@ const TermInsuranceCalculator = () => {
                 max="65"
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
-                className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg transition-colors"
+                className="border-2 border-gray-200 focus:border-purple-400 bg-white/90 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm h-12 text-lg font-semibold"
               />
             </div>
 
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-[#213753] flex items-center">
-                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+            <div className="space-y-4">
+              <Label className="text-sm font-bold text-gray-700 flex items-center">
+                <span className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mr-3 shadow-lg"></span>
                 Gender
               </Label>
               <Select 
                 value={formData.gender} 
                 onValueChange={(value: "male" | "female") => setFormData({ ...formData, gender: value })}
               >
-                <SelectTrigger className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg">
+                <SelectTrigger className="border-2 border-gray-200 focus:border-purple-400 bg-white/90 rounded-xl h-12 text-lg font-semibold shadow-lg backdrop-blur-sm">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-white">
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
+                <SelectContent className="bg-white/95 backdrop-blur-lg border border-gray-200 rounded-xl shadow-2xl">
+                  <SelectItem value="male" className="text-lg font-medium">Male</SelectItem>
+                  <SelectItem value="female" className="text-lg font-medium">Female</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-gray-200">
-              <Label className="text-sm font-semibold text-[#213753] flex items-center">
-                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+            <div className="flex items-center justify-between p-6 bg-gradient-to-r from-gray-50/80 via-blue-50/60 to-purple-50/80 rounded-xl border border-gray-200/50 backdrop-blur-sm shadow-lg">
+              <Label className="text-sm font-bold text-gray-700 flex items-center">
+                <span className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mr-3 shadow-lg"></span>
                 Smoker
               </Label>
-              <div className="flex items-center space-x-3">
-                <span className="text-sm text-[#3D4E64] font-medium">No</span>
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600 font-semibold">No</span>
                 <Switch
                   checked={formData.isSmoker}
                   onCheckedChange={(checked) => setFormData({ ...formData, isSmoker: checked })}
-                  className="data-[state=checked]:bg-[#3B9560]"
+                  className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-purple-500 data-[state=checked]:to-pink-500 shadow-lg"
                 />
-                <span className="text-sm text-[#3D4E64] font-medium">Yes</span>
+                <span className="text-sm text-gray-600 font-semibold">Yes</span>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <Label htmlFor="coverage" className="text-sm font-semibold text-[#213753] flex items-center">
-                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+            <div className="space-y-4">
+              <Label htmlFor="coverage" className="text-sm font-bold text-gray-700 flex items-center">
+                <span className="w-3 h-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mr-3 shadow-lg"></span>
                 Coverage Amount (₹ Lakhs)
               </Label>
               <Input
@@ -288,14 +323,14 @@ const TermInsuranceCalculator = () => {
                 max="1000"
                 value={formData.coverageAmountLakh}
                 onChange={(e) => setFormData({ ...formData, coverageAmountLakh: parseInt(e.target.value) || 0 })}
-                className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg transition-colors"
+                className="border-2 border-gray-200 focus:border-purple-400 bg-white/90 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm h-12 text-lg font-semibold"
                 placeholder="e.g., 50 for ₹50 Lakhs"
               />
             </div>
 
-            <div className="space-y-3">
-              <Label htmlFor="coverageTill" className="text-sm font-semibold text-[#213753] flex items-center">
-                <span className="w-2 h-2 bg-[#3B9560] rounded-full mr-2"></span>
+            <div className="space-y-4">
+              <Label htmlFor="coverageTill" className="text-sm font-bold text-gray-700 flex items-center">
+                <span className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mr-3 shadow-lg"></span>
                 Coverage Till Age
               </Label>
               <Input
@@ -305,20 +340,21 @@ const TermInsuranceCalculator = () => {
                 max="75"
                 value={formData.coverageTillAge}
                 onChange={(e) => setFormData({ ...formData, coverageTillAge: parseInt(e.target.value) || 0 })}
-                className="border-2 border-gray-200 focus:border-[#3B9560] bg-white rounded-lg transition-colors"
+                className="border-2 border-gray-200 focus:border-purple-400 bg-white/90 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm h-12 text-lg font-semibold"
               />
-              <p className="text-xs text-[#3D4E64] bg-blue-50 p-2 rounded border border-blue-200">
+              <p className="text-xs text-gray-600 bg-gradient-to-r from-blue-50/80 to-purple-50/80 p-3 rounded-lg border border-blue-200/50 font-medium backdrop-blur-sm">
                 Policy Term: {formData.coverageTillAge - formData.age} years
               </p>
             </div>
 
             <Button 
               onClick={calculateTermPremiums}
-              className="w-full bg-gradient-to-r from-[#3B9560] to-emerald-600 hover:from-emerald-600 hover:to-[#3B9560] transition-all transform hover:scale-[1.02] duration-300 text-white font-semibold py-4 rounded-lg shadow-lg"
+              className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-pink-600 hover:via-red-600 hover:to-orange-600 transition-all transform hover:scale-[1.02] duration-300 text-white font-bold py-6 rounded-xl shadow-2xl text-lg relative overflow-hidden group border border-white/20 backdrop-blur-sm"
               size="lg"
             >
-              <Sparkles className="h-5 w-5 mr-2" />
-              Calculate Premium
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Sparkles className="h-6 w-6 mr-3 relative z-10 animate-pulse" />
+              <span className="relative z-10">Calculate Premium</span>
             </Button>
           </CardContent>
         </Card>

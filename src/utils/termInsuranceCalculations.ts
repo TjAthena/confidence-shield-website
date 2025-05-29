@@ -70,24 +70,24 @@ export function calculatePremiums(age: number, gender: "male" | "female", sumAss
 
   return {
     "ICICI Prudential": {
-      annual: parseFloat(icici.toFixed(2)),
-      monthly: parseFloat(((icici / 12) * 1.03).toFixed(2))
+      annual: Math.round(icici),
+      monthly: Math.round((icici / 12) * 1.03)
     },
     "HDFC Life": {
-      annual: parseFloat(hdfc.toFixed(2)),
-      monthly: parseFloat(((hdfc / 12) * 1.03).toFixed(2))
+      annual: Math.round(hdfc),
+      monthly: Math.round((hdfc / 12) * 1.03)
     },
     "Max Life": {
-      annual: parseFloat(maxLife.toFixed(2)),
-      monthly: parseFloat(((maxLife / 12) * 1.03).toFixed(2))
+      annual: Math.round(maxLife),
+      monthly: Math.round((maxLife / 12) * 1.03)
     },
     "LIC": {
-      annual: parseFloat(lic.toFixed(2)),
-      monthly: parseFloat(((lic / 12) * 1.03).toFixed(2))
+      annual: Math.round(lic),
+      monthly: Math.round((lic / 12) * 1.03)
     },
     "SBI Life": {
-      annual: parseFloat(sbi.toFixed(2)),
-      monthly: parseFloat(((sbi / 12) * 1.03).toFixed(2))
+      annual: Math.round(sbi),
+      monthly: Math.round((sbi / 12) * 1.03)
     }
   };
 }
