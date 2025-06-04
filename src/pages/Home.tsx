@@ -1,23 +1,19 @@
 
-import NewHeroSection from "@/components/home/NewHeroSection";
-import FeaturesSection from "@/components/home/FeaturesSection";
-import FAQSection from "@/components/home/FAQSection";
-import ContactSection from "@/components/home/ContactSection";
+import HeroSection from "@/components/home/HeroSection";
 import ProductCategories from "@/components/home/ProductCategories";
 import TrustSection from "@/components/home/TrustSection";
 import LeadCaptureForm from "@/components/home/LeadCaptureForm";
+import SimpleCalculator from "@/components/home/SimpleCalculator";
 import IllustrationsSection from "@/components/home/IllustrationsSection";
 
 const Home = () => {
   return (
     <>
-      <NewHeroSection />
-      <FeaturesSection />
+      <HeroSection />
       <IllustrationsSection />
       <ProductCategories />
+      <SimpleCalculator />
       <TrustSection />
-      <FAQSection />
-      <ContactSection />
       <LeadCaptureForm />
     </>
   );
