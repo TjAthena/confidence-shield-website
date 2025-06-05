@@ -9,7 +9,7 @@ const ProductCards = () => {
       title: "Financial Protection",
       description: "Protect your life and family and gives a Confident Life Style Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum fugiat enim ut repellat saepe distinctio quae ratione, eveniet delectus quibusdam.",
       icon: Shield,
-      image: "https://images.unsplash.com/photo-1559526324-593bc2ace6a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      image: "/public/assets/Financial_Protection.webp",
       products: ["Term Insurance", "Return of Premium"],
       color: "from-turquoise-dark to-turquoise-teal"
     },

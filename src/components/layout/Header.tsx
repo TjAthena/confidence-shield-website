@@ -65,7 +65,7 @@ const Header = () => {
           items: [ ]
         },
         {
-          title: "Kids Education",
+          title: "Child Education Plans",
           path: "/kids_education",
           items: [ ]
         },
@@ -80,7 +80,7 @@ const Header = () => {
           items: [ ]
         },
         {
-          title: "Security bond",
+          title: "Security Bonds",
           path: "/security bond",
           items: [ ]
         }
