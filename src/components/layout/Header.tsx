@@ -35,64 +35,89 @@ const Header = () => {
 
   const productCategories = [
     {
-      title: "Life Insurance",
-      path: "/life-insurance",
+      title: "Insurance",
+      path: "/",
       subcategories: [
         {
-          title: "Term",
+          title: "Term Insurance",
           path: "/term-insurance",
           items: []
         },
         {
-          title: "Savings",
-          path: "/savings-insurance",
-          items: [
-            { name: "Kids Education", path: "/kids-education" },
-            { name: "Retirement Planning", path: "/retirement-planning" },
-            { name: "Wealth Creation", path: "/wealth-creation" }
-          ]
-        }
-      ]
-    },
-    {
-      title: "General Insurance",
-      path: "/general-insurance",
-      subcategories: [
-        {
-          title: "Health",
+          title: "Health Insurance",
           path: "/health-insurance",
-          items: [
-            { name: "Individual", path: "/health-individual" },
-            { name: "Family", path: "/health-family" },
-            { name: "Group", path: "/health-group" }
-          ]
+          items: []
+        },
+        {
+          title: "Motor Insurance",
+          path: "/motor-insurance",
+          items: []
         }
       ]
     },
     {
       title: "Savings",
-      path: "/savings",
+      path: "/",
       subcategories: [
-        { title: "Fixed Deposit / Recurring Deposit (FD / RD)", path: "/fixed-deposits", items: [] },
-        { title: "Mutual Funds", path: "/mutual-funds", items: [] },
-        { title: "Bonds", path: "/bonds", items: [] }
+        {
+          title: "Fixed Deposit / Recurring Deposit (FD / RD)",
+          path: "/health-insurance",
+          items: [ ]
+        },
+        {
+          title: "Kids Education",
+          path: "/kids_education",
+          items: [ ]
+        },
+        {
+          title: "Retirement Plans",
+          path: "/Retirement Plans",
+          items: [ ]
+        },
+        {
+          title: "Wealth Creation",
+          path: "/Wealth Creation",
+          items: [ ]
+        },
+        {
+          title: "Security bond",
+          path: "/security bond",
+          items: [ ]
+        }
+        
       ]
     },
     {
-      title: "Loans",
-      path: "/loans",
+      title: "Loans & Cards",
+      path: "/",
       subcategories: [
-        { title: "Housing Loan", path: "/housing-loan", items: [] },
-        { title: "Equity and Mortgage", path: "/equity-mortgage", items: [] },
-        { title: "Personal Loan", path: "/personal-loan", items: [] },
-        { title: "Business Loan", path: "/business-loan", items: [] }
+        {
+          title: "Housing Loan",
+          path: "/",
+          items: []
+        },
+        {
+          title: "Personal Loan",
+          path: "/",
+          items: []
+        },
+        {
+          title: "Mortgage Loan",
+          path: "/",
+          items: []
+        },
+        {
+          title: "Business Loan",
+          path: "/",
+          items: []
+        },
+        {
+          title: "Credit Cards",
+          path: "/",
+          items: []
+        }
       ]
     },
-    {
-      title: "Credit Cards",
-      path: "/credit-cards",
-      subcategories: []
-    }
   ];
 
   return (
