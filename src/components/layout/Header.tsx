@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Menu, X, ChevronDown, ChevronRight, Sparkles } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState<string | null>(null);
+  const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
   const toggleMenu = () => {
@@ -17,32 +18,80 @@ const Header = () => {
   const toggleCategory = (category: string) => {
     if (openCategory === category) {
       setOpenCategory(null);
+      setOpenSubCategory(null);
     } else {
       setOpenCategory(category);
+      setOpenSubCategory(null);
     }
   };
 
-  const financialProducts = [
+  const toggleSubCategory = (subCategory: string) => {
+    if (openSubCategory === subCategory) {
+      setOpenSubCategory(null);
+    } else {
+      setOpenSubCategory(subCategory);
+    }
+  };
+
+  const productCategories = [
     {
-      title: "Life Protection",
-      items: [
-        { name: "Term Insurance", path: "/term-insurance" },
-        { name: "Return of Premium", path: "/return-of-premium" },
+      title: "Life Insurance",
+      path: "/life-insurance",
+      subcategories: [
+        {
+          title: "Term",
+          path: "/term-insurance",
+          items: []
+        },
+        {
+          title: "Savings",
+          path: "/savings-insurance",
+          items: [
+            { name: "Kids Education", path: "/kids-education" },
+            { name: "Retirement Planning", path: "/retirement-planning" },
+            { name: "Wealth Creation", path: "/wealth-creation" }
+          ]
+        }
       ]
     },
     {
-      title: "Financial Security",
-      items: [
-        { name: "Health Insurance", path: "/health-insurance" },
-        { name: "Vehicle Insurance", path: "/vehicle-insurance" },
+      title: "General Insurance",
+      path: "/general-insurance",
+      subcategories: [
+        {
+          title: "Health",
+          path: "/health-insurance",
+          items: [
+            { name: "Individual", path: "/health-individual" },
+            { name: "Family", path: "/health-family" },
+            { name: "Group", path: "/health-group" }
+          ]
+        }
       ]
     },
     {
-      title: "Financial Freedom",
-      items: [
-        { name: "Fixed Deposits & RD", path: "/fixed-deposits" },
-        { name: "Mutual Funds", path: "/mutual-funds" },
+      title: "Savings",
+      path: "/savings",
+      subcategories: [
+        { title: "Fixed Deposit / Recurring Deposit (FD / RD)", path: "/fixed-deposits", items: [] },
+        { title: "Mutual Funds", path: "/mutual-funds", items: [] },
+        { title: "Bonds", path: "/bonds", items: [] }
       ]
+    },
+    {
+      title: "Loans",
+      path: "/loans",
+      subcategories: [
+        { title: "Housing Loan", path: "/housing-loan", items: [] },
+        { title: "Equity and Mortgage", path: "/equity-mortgage", items: [] },
+        { title: "Personal Loan", path: "/personal-loan", items: [] },
+        { title: "Business Loan", path: "/business-loan", items: [] }
+      ]
+    },
+    {
+      title: "Credit Cards",
+      path: "/credit-cards",
+      subcategories: []
     }
   ];
 
@@ -50,13 +99,11 @@ const Header = () => {
     <header className="bg-white/90 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise sticky top-0 z-50">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto">
         <Link to="/" className="flex items-center space-x-2 group">
-          <div className="w-10 h-10 rounded-full gradient-turquoise flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
-          <span className="text-xl font-bold">
-            <span className="text-turquoise-dark">Confidence</span>
-            <span className="text-turquoise-teal">Financial</span>
-          </span>
+          <img 
+            src="/lovable-uploads/6c404703-9ca2-4fa0-891a-ad4b2a8ec18c.png" 
+            alt="Confidence Financial Services" 
+            className="h-12 w-auto group-hover:scale-110 transition-transform duration-300"
+          />
         </Link>
 
         {!isMobile ? (
@@ -66,7 +113,7 @@ const Header = () => {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link to="/about" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">
-              About
+              About Us
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
             
@@ -75,34 +122,51 @@ const Header = () => {
                 className="flex items-center text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium gap-1 group"
                 onClick={() => toggleCategory("products")}
               >
-                Products
+                Our Products
                 <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
               </button>
               
-              <div className="hidden group-hover:block absolute top-full left-0 w-64 bg-white/95 backdrop-blur-md shadow-turquoise rounded-xl border border-turquoise-light/30 z-50 overflow-hidden">
-                {financialProducts.map((category) => (
+              <div className="hidden group-hover:block absolute top-full left-0 w-80 bg-white/95 backdrop-blur-md shadow-turquoise rounded-xl border border-turquoise-light/30 z-50 overflow-hidden">
+                {productCategories.map((category) => (
                   <div key={category.title} className="border-b border-turquoise-light/20 last:border-none">
-                    <div className="p-4 font-semibold text-turquoise-dark bg-gradient-to-r from-turquoise-pale to-turquoise-light/30">
+                    <Link 
+                      to={category.path}
+                      className="block p-4 font-semibold text-turquoise-dark bg-gradient-to-r from-turquoise-pale to-turquoise-light/30 hover:from-turquoise-light/40 hover:to-turquoise-pale/50 transition-all duration-300"
+                    >
                       {category.title}
-                    </div>
-                    {category.items.map((item) => (
-                      <Link 
-                        key={item.name}
-                        to={item.path}
-                        className="block p-3 pl-6 text-sm text-turquoise-dark hover:bg-gradient-to-r hover:from-turquoise-light/20 hover:to-turquoise-pale/30 hover:text-turquoise-teal transition-all duration-300"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Link>
+                    </Link>
+                    {category.subcategories.map((subcategory) => (
+                      <div key={subcategory.title}>
+                        <Link 
+                          to={subcategory.path}
+                          className="block p-3 pl-6 text-sm text-turquoise-dark hover:bg-gradient-to-r hover:from-turquoise-light/20 hover:to-turquoise-pale/30 hover:text-turquoise-teal transition-all duration-300"
+                        >
+                          {subcategory.title}
+                        </Link>
+                        {subcategory.items.map((item) => (
+                          <Link 
+                            key={item.name}
+                            to={item.path}
+                            className="block p-2 pl-12 text-xs text-turquoise-dark/80 hover:bg-gradient-to-r hover:from-turquoise-light/10 hover:to-turquoise-pale/20 hover:text-turquoise-teal transition-all duration-300"
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 ))}
               </div>
             </div>
+
+            <Link to="/partners" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">
+              Our Partners
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
+            </Link>
             
             <Link to="/contact" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">
-              Contact
+              Contact Us
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Button className="gradient-turquoise hover:scale-105 transition-all duration-300 shadow-turquoise text-white font-semibold px-6">
@@ -117,7 +181,7 @@ const Header = () => {
       </div>
 
       {isMobile && isMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise md:hidden">
+        <div className="absolute top-16 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise md:hidden max-h-96 overflow-y-auto">
           <nav className="flex flex-col py-4">
             <Link
               to="/"
@@ -131,7 +195,7 @@ const Header = () => {
               className="px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 hover:text-turquoise-teal transition-all duration-300 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              About
+              About Us
             </Link>
             
             <div>
@@ -139,37 +203,64 @@ const Header = () => {
                 className="flex items-center justify-between w-full px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 transition-all duration-300 font-medium"
                 onClick={() => toggleCategory("products")}
               >
-                <span>Products</span>
+                <span>Our Products</span>
                 {openCategory === "products" ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
               </button>
               
               {openCategory === "products" && (
                 <div className="bg-gradient-to-r from-turquoise-pale to-turquoise-light/30">
-                  {financialProducts.map((category) => (
+                  {productCategories.map((category) => (
                     <div key={category.title} className="border-t border-turquoise-light/30">
-                      <div className="px-6 py-2 text-sm font-semibold text-turquoise-teal">{category.title}</div>
-                      {category.items.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className="block px-8 py-2 text-sm text-turquoise-dark hover:bg-turquoise-light/30 hover:text-turquoise-teal transition-all duration-300"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {item.name}
-                        </Link>
+                      <button
+                        className="flex items-center justify-between w-full px-8 py-2 text-sm font-semibold text-turquoise-teal hover:bg-turquoise-light/30 transition-all duration-300"
+                        onClick={() => toggleSubCategory(category.title)}
+                      >
+                        {category.title}
+                        {category.subcategories.length > 0 && (
+                          openSubCategory === category.title ? <ChevronDown size={14} /> : <ChevronRight size={14} />
+                        )}
+                      </button>
+                      {openSubCategory === category.title && category.subcategories.map((subcategory) => (
+                        <div key={subcategory.title}>
+                          <Link
+                            to={subcategory.path}
+                            className="block px-12 py-2 text-xs text-turquoise-dark hover:bg-turquoise-light/30 hover:text-turquoise-teal transition-all duration-300"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {subcategory.title}
+                          </Link>
+                          {subcategory.items.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.path}
+                              className="block px-16 py-1 text-xs text-turquoise-dark/80 hover:bg-turquoise-light/30 hover:text-turquoise-teal transition-all duration-300"
+                              onClick={() => setIsMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
                       ))}
                     </div>
                   ))}
                 </div>
               )}
             </div>
+
+            <Link
+              to="/partners"
+              className="px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 hover:text-turquoise-teal transition-all duration-300 font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Our Partners
+            </Link>
             
             <Link
               to="/contact"
               className="px-6 py-3 text-turquoise-dark hover:bg-turquoise-light/20 hover:text-turquoise-teal transition-all duration-300 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact
+              Contact Us
             </Link>
             <div className="px-6 py-3">
               <Button className="w-full gradient-turquoise hover:scale-105 transition-all duration-300 shadow-turquoise text-white font-semibold">

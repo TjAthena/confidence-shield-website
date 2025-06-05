@@ -1,19 +1,21 @@
 
-import HeroSection from "@/components/home/HeroSection";
-import ProductCategories from "@/components/home/ProductCategories";
+import HeroCarousel from "@/components/home/HeroCarousel";
+import ProductCards from "@/components/home/ProductCards";
+import ProductFeatures from "@/components/home/ProductFeatures";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
 import TrustSection from "@/components/home/TrustSection";
+import FAQSection from "@/components/home/FAQSection";
 import LeadCaptureForm from "@/components/home/LeadCaptureForm";
-import SimpleCalculator from "@/components/home/SimpleCalculator";
-import IllustrationsSection from "@/components/home/IllustrationsSection";
 
 const Home = () => {
   return (
     <>
-      <HeroSection />
-      <IllustrationsSection />
-      <ProductCategories />
-      <SimpleCalculator />
+      <HeroCarousel />
+      <ProductCards />
+      <ProductFeatures />
+      <WhyChooseUs />
       <TrustSection />
+      <FAQSection />
       <LeadCaptureForm />
     </>
   );

@@ -17,6 +17,8 @@ import HealthInsurance from "./pages/HealthInsurance";
 import VehicleInsurance from "./pages/VehicleInsurance";
 import FixedDeposits from "./pages/FixedDeposits";
 import MutualFunds from "./pages/MutualFunds";
+import LifeInsurance from "./pages/LifeInsurance";
+import GeneralInsurance from "./pages/GeneralInsurance";
 
 const queryClient = new QueryClient();
 
@@ -33,8 +35,11 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/products/:category/:product" element={<ProductDetail />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/partners" element={<About />} />
             
             {/* Individual product pages */}
+            <Route path="/life-insurance" element={<LifeInsurance />} />
+            <Route path="/general-insurance" element={<GeneralInsurance />} />
             <Route path="/term-insurance" element={<TermInsurance />} />
             <Route path="/return-of-premium" element={<ReturnOfPremium />} />
             <Route path="/health-insurance" element={<HealthInsurance />} />
