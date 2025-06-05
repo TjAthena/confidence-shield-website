@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import HealthInsuranceCalculator from "@/components/products/HealthInsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
@@ -85,12 +84,6 @@ const HealthInsurance = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-white">
-        <div className="container px-4 mx-auto">
-          <HealthInsuranceCalculator />
         </div>
       </section>
 

@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import InsuranceCalculator from "@/components/products/InsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
@@ -138,8 +137,6 @@ const ReturnOfPremium = () => {
             </div>
             <div>
               <div className="sticky top-20">
-                <InsuranceCalculator type="term" />
-                
                 <div className="p-4 mt-6 bg-gray-50 rounded border border-gray-200">
                   <h3 className="mb-2 text-lg font-medium">Need Help?</h3>
                   <p className="mb-4 text-gray-600">

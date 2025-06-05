@@ -1,11 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import FDCalculator from "@/components/products/FDCalculator";
-import RDCalculator from "@/components/products/RDCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const FixedDeposits = () => {
   const providers = [
@@ -56,25 +53,6 @@ const FixedDeposits = () => {
           <p className="max-w-3xl text-lg text-[#3D4E64]">
             Fixed and recurring deposits are low-risk investment options that offer guaranteed returns over a fixed tenure. They provide stability and predictability to your investment portfolio.
           </p>
-        </div>
-      </section>
-
-      <section className="py-12 bg-white">
-        <div className="container px-4 mx-auto">
-          <Tabs defaultValue="fd" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8 bg-[#FCF9F8] border border-[#3D4E64]/20">
-              <TabsTrigger value="fd" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#3B9560] data-[state=active]:to-green-600 data-[state=active]:text-white">Fixed Deposits</TabsTrigger>
-              <TabsTrigger value="rd" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#3B9560] data-[state=active]:to-green-600 data-[state=active]:text-white">Recurring Deposits</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="fd">
-              <FDCalculator />
-            </TabsContent>
-            
-            <TabsContent value="rd">
-              <RDCalculator />
-            </TabsContent>
-          </Tabs>
         </div>
       </section>
 

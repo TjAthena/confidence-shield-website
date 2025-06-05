@@ -1,6 +1,5 @@
 
 import { Link, useParams } from "react-router-dom";
-import InsuranceCalculator from "@/components/products/InsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 import { Button } from "@/components/ui/button";
@@ -8,41 +7,33 @@ import { Button } from "@/components/ui/button";
 const ProductDetail = () => {
   const { category, product } = useParams();
   
-  let productType: "term" | "health" | "vehicle" | "investment" = "term";
   let productTitle = "";
   let productDescription = "";
-  let calculatorType: "term" | "health" | "vehicle" | "investment" = "term";
   
   // Determine product information based on URL parameters
   if (category === "life-protection") {
     if (product === "term-insurance") {
       productTitle = "Term Insurance";
       productDescription = "Term insurance provides pure life coverage for a specified period. In the event of the policyholder's death during the policy term, the nominee receives the sum assured. It offers high coverage at affordable premiums.";
-      calculatorType = "term";
     } else if (product === "return-of-premium") {
       productTitle = "Return of Premium Plans";
       productDescription = "Return of Premium (ROP) insurance provides life coverage and returns all paid premiums at the end of the policy term if the policyholder survives. It combines protection with savings.";
-      calculatorType = "term";
     }
   } else if (category === "financial-security") {
     if (product === "health-insurance") {
       productTitle = "Health Insurance";
       productDescription = "Health insurance covers medical expenses incurred during hospitalization, treatments, and procedures. It provides financial protection against rising healthcare costs and ensures access to quality medical care.";
-      calculatorType = "health";
     } else if (product === "vehicle-insurance") {
       productTitle = "Vehicle Insurance";
       productDescription = "Vehicle insurance protects against financial loss due to damage, theft, or third-party liability related to your vehicle. It provides peace of mind and compliance with legal requirements.";
-      calculatorType = "vehicle";
     }
   } else if (category === "financial-freedom") {
     if (product === "fixed-deposits") {
       productTitle = "Fixed Deposits & Recurring Deposits";
       productDescription = "Fixed and recurring deposits are low-risk investment options that offer guaranteed returns over a fixed tenure. They provide stability and predictability to your investment portfolio.";
-      calculatorType = "investment";
     } else if (product === "mutual-funds") {
       productTitle = "Mutual Funds";
       productDescription = "Mutual funds are professionally managed investment vehicles that pool money from multiple investors to invest in various securities. They offer diversification, liquidity, and potential for higher returns.";
-      calculatorType = "investment";
     }
   }
   
@@ -162,8 +153,6 @@ const ProductDetail = () => {
             </div>
             <div className="lg:col-span-2">
               <div className="sticky top-24">
-                <InsuranceCalculator type={calculatorType} />
-                
                 <div className="p-6 mt-6 bg-gray-50 rounded-lg">
                   <h3 className="mb-4 text-lg font-semibold">Need Expert Advice?</h3>
                   <p className="mb-4 text-gray-600">

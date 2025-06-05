@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import InsuranceCalculator from "@/components/products/InsuranceCalculator";
 import ProviderList from "@/components/products/ProviderList";
 import FAQ from "@/components/products/FAQ";
 
@@ -116,8 +115,6 @@ const VehicleInsurance = () => {
             </div>
             <div className="lg:col-span-2">
               <div className="sticky top-24">
-                <InsuranceCalculator type="vehicle" />
-                
                 <div className="p-6 mt-6 bg-gray-50 rounded-lg">
                   <h3 className="mb-4 text-lg font-semibold">Need Expert Advice?</h3>
                   <p className="mb-4 text-gray-600">
