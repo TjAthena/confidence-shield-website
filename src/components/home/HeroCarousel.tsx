@@ -44,7 +44,7 @@ const HeroCarousel = () => {
   }, []);
 
   return (
-    <section className="relative h-[480px] overflow-hidden bg-gradient-to-br from-turquoise-pale via-white to-turquoise-light/30">
+    <section className="relative h-[500px] overflow-hidden bg-gradient-to-br from-turquoise-pale via-white to-turquoise-light/30">
       <div className="container px-4 mx-auto h-full flex flex-col justify-center">
         {/* Carousel Container */}
         <div className="relative w-full max-w-[1400px] h-64 mx-auto rounded-2xl overflow-hidden shadow-turquoise mb-8">
@@ -122,7 +122,7 @@ const HeroCarousel = () => {
 
         {/* Floating badges */}
         <div className="relative mt-8">
-          <div className="absolute -top-4 right-[10%] w-16 h-16 bg-gradient-to-br from-turquoise-teal to-turquoise-medium rounded-full flex items-center justify-center shadow-turquoise animate-float">
+          <div className="absolute bottom-40 right-[10%] w-16 h-16 bg-gradient-to-br from-turquoise-teal to-turquoise-medium rounded-full flex items-center justify-center shadow-turquoise animate-float">
             <span className="text-white font-bold text-xs text-center">Best<br/>Rates</span>
           </div>
           
