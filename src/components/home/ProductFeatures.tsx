@@ -36,7 +36,7 @@ const ProductFeatures = () => {
                 Protection Plans For your Family Security and Your Self Confidence
               </h2>
             </div>
-            <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto lg:mx-0">
+            <div className="grid grid-cols-3 gap-10 max-w-lg mx-auto lg:mx-0">
               {leftProducts.map((product, index) => (
                 <div 
                   key={index}
@@ -64,7 +64,7 @@ const ProductFeatures = () => {
                 Financial Products Features
               </h3>
             </div>
-            <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto lg:mx-0">
+            <div className="grid grid-cols-3 gap-10 mr-30px max-w-lg mx-auto lg:mx-0">
               {rightFeatures.map((feature, index) => (
                 <div 
                   key={index}

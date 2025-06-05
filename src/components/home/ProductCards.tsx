@@ -40,10 +40,7 @@ const ProductCards = () => {
               key={index}
               className="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-turquoise border border-turquoise-light/30 hover:shadow-2xl transition-all duration-500 hover:scale-105"
             >
-              {/* Icon */}
-              <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${product.color} flex items-center justify-center mb-6 mx-auto`}>
-                <product.icon className="w-8 h-8 text-white" />
-              </div>
+              
 
               {/* Title */}
               <h3 className="text-2xl font-bold text-turquoise-dark text-center mb-6">
