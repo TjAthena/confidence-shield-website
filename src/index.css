@@ -87,15 +87,26 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border font-calibri;
   }
 
   html {
     scroll-behavior: smooth;
+    font-size: 14px; /* Make base font size smaller */
   }
 
   body {
-    @apply bg-background text-foreground font-['Calibri',sans-serif];
+    @apply bg-background text-foreground font-calibri;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-calibri;
+  }
+
+  /* Make all components slightly smaller */
+  .container {
+    @apply px-3;
   }
 }
 
