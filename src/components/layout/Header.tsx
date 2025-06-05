@@ -96,13 +96,14 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white/90 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise sticky top-0 z-50">
-      <div className="container flex items-center justify-between h-16 px-4 mx-auto">
+    <header className="bg-white/90 backdrop-blur-md border-b border-turquoise-light/30 shadow-turquoise sticky top-30 z-50">
+      <div className="container flex items-center justify-between h-25 px-4 mx-auto">
         <Link to="/" className="flex items-center space-x-2 group">
           <img 
+          style={{ width: '100px', height: '100px' }}
             src="/lovable-uploads/6c404703-9ca2-4fa0-891a-ad4b2a8ec18c.png" 
             alt="Confidence Financial Services" 
-            className="h-12 w-auto group-hover:scale-110 transition-transform duration-300"
+            className="group-hover:scale-110 transition-transform duration-300"
           />
         </Link>
 
