@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
   const toggleMenu = () => {
@@ -117,47 +117,60 @@ const Header = () => {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
             </Link>
             
-            <div className="relative group">
-              <button 
-                className="flex items-center text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium gap-1 group"
-                onClick={() => toggleCategory("products")}
-              >
+            <div 
+              className="relative group"
+              onMouseEnter={() => setHoveredCategory("products")}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <button className="flex items-center text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium gap-1 group">
                 Our Products
                 <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-turquoise-teal to-turquoise-medium group-hover:w-full transition-all duration-300"></span>
               </button>
               
-              <div className="hidden group-hover:block absolute top-full left-0 w-80 bg-white/95 backdrop-blur-md shadow-turquoise rounded-xl border border-turquoise-light/30 z-50 overflow-hidden">
-                {productCategories.map((category) => (
-                  <div key={category.title} className="border-b border-turquoise-light/20 last:border-none">
-                    <Link 
-                      to={category.path}
-                      className="block p-4 font-semibold text-turquoise-dark bg-gradient-to-r from-turquoise-pale to-turquoise-light/30 hover:from-turquoise-light/40 hover:to-turquoise-pale/50 transition-all duration-300"
-                    >
-                      {category.title}
-                    </Link>
-                    {category.subcategories.map((subcategory) => (
-                      <div key={subcategory.title}>
-                        <Link 
-                          to={subcategory.path}
-                          className="block p-3 pl-6 text-sm text-turquoise-dark hover:bg-gradient-to-r hover:from-turquoise-light/20 hover:to-turquoise-pale/30 hover:text-turquoise-teal transition-all duration-300"
-                        >
-                          {subcategory.title}
+              {hoveredCategory === "products" && (
+                <div className="absolute top-full left-0 w-80 bg-white/95 backdrop-blur-md shadow-turquoise rounded-xl border border-turquoise-light/30 z-50 overflow-hidden">
+                  {productCategories.map((category) => (
+                    <div key={category.title} className="border-b border-turquoise-light/20 last:border-none">
+                      <div 
+                        className="p-4 font-semibold text-turquoise-dark bg-gradient-to-r from-turquoise-pale to-turquoise-light/30 hover:from-turquoise-light/40 hover:to-turquoise-pale/50 transition-all duration-300 cursor-pointer flex items-center justify-between"
+                        onClick={() => toggleCategory(category.title)}
+                      >
+                        <Link to={category.path} className="flex-1">
+                          {category.title}
                         </Link>
-                        {subcategory.items.map((item) => (
-                          <Link 
-                            key={item.name}
-                            to={item.path}
-                            className="block p-2 pl-12 text-xs text-turquoise-dark/80 hover:bg-gradient-to-r hover:from-turquoise-light/10 hover:to-turquoise-pale/20 hover:text-turquoise-teal transition-all duration-300"
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
+                        {category.subcategories.length > 0 && (
+                          <ChevronRight 
+                            size={16} 
+                            className={`transition-transform duration-300 ${
+                              openCategory === category.title ? 'rotate-90' : ''
+                            }`}
+                          />
+                        )}
                       </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
+                      {openCategory === category.title && category.subcategories.map((subcategory) => (
+                        <div key={subcategory.title}>
+                          <Link 
+                            to={subcategory.path}
+                            className="block p-3 pl-6 text-sm text-turquoise-dark hover:bg-gradient-to-r hover:from-turquoise-light/20 hover:to-turquoise-pale/30 hover:text-turquoise-teal transition-all duration-300"
+                          >
+                            {subcategory.title}
+                          </Link>
+                          {subcategory.items.map((item) => (
+                            <Link 
+                              key={item.name}
+                              to={item.path}
+                              className="block p-2 pl-12 text-xs text-turquoise-dark/80 hover:bg-gradient-to-r hover:from-turquoise-light/10 hover:to-turquoise-pale/20 hover:text-turquoise-teal transition-all duration-300"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <Link to="/partners" className="text-turquoise-dark hover:text-turquoise-teal transition-colors duration-300 font-medium relative group">

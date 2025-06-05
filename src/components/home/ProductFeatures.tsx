@@ -24,44 +24,55 @@ const ProductFeatures = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-white to-turquoise-pale/30">
       <div className="container px-4 mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-turquoise-dark mb-4">
-            Protection Plans For your Family Security and Your Self Confidence
-          </h2>
-          <h3 className="text-2xl font-semibold text-turquoise-teal">
-            Financial Products Features
-          </h3>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Side - Products */}
+          {/* Left Column - Products */}
           <div>
+            <div className="text-center lg:text-left mb-8">
+              <h2 className="text-3xl font-bold text-turquoise-dark mb-4">
+                Protection Plans For your Family Security and Your Self Confidence
+              </h2>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {leftProducts.map((product, index) => (
-                <div 
-                  key={index}
-                  className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-turquoise border border-turquoise-light/30 hover:shadow-lg transition-all duration-300 hover:scale-105"
-                >
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-turquoise-teal to-turquoise-medium flex items-center justify-center">
-                      <product.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-turquoise-dark">{product.name}</h4>
-                  </div>
-                  <Button 
-                    className="w-full bg-turquoise-dark hover:bg-turquoise-teal transition-all duration-300 text-white font-medium"
-                    size="sm"
+              {leftProducts.map((product, index) => {
+                // First row: 3 cards (items 0, 1, 2)
+                // Second row: 2 cards aligned left (items 3, 4)
+                // Third card: remaining card (item 5)
+                const isSecondRow = index >= 3 && index <= 4;
+                const isThirdRow = index === 5;
+                
+                return (
+                  <div 
+                    key={index}
+                    className={`bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-turquoise border border-turquoise-light/30 hover:shadow-lg transition-all duration-300 hover:scale-105 ${
+                      isThirdRow ? 'sm:col-span-1' : ''
+                    }`}
                   >
-                    Know More
-                  </Button>
-                </div>
-              ))}
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-turquoise-teal to-turquoise-medium flex items-center justify-center">
+                        <product.icon className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                    <h4 className="font-semibold text-turquoise-dark text-center mb-4">{product.name}</h4>
+                    <Button 
+                      className="w-full bg-turquoise-dark hover:bg-turquoise-teal transition-all duration-300 text-white font-medium"
+                      size="sm"
+                    >
+                      Know More
+                    </Button>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right Side - Features */}
+          {/* Right Column - Features */}
           <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="text-center lg:text-left mb-8">
+              <h3 className="text-3xl font-bold text-turquoise-dark">
+                Financial Products Features
+              </h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {rightFeatures.map((feature, index) => (
                 <div 
                   key={index}

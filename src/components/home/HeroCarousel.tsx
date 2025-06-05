@@ -44,10 +44,10 @@ const HeroCarousel = () => {
   }, []);
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Carousel Container */}
-      <div className="container px-4 mx-auto">
-        <div className="relative w-[70%] h-64 mx-auto rounded-2xl overflow-hidden shadow-turquoise">
+    <section className="relative h-[480px] overflow-hidden bg-gradient-to-br from-turquoise-pale via-white to-turquoise-light/30">
+      <div className="container px-4 mx-auto h-full flex flex-col justify-center">
+        {/* Carousel Container */}
+        <div className="relative w-full max-w-[1400px] h-64 mx-auto rounded-2xl overflow-hidden shadow-turquoise mb-8">
           {slides.map((slide, index) => (
             <div
               key={index}
@@ -104,7 +104,7 @@ const HeroCarousel = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 justify-center mt-12">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 justify-center">
           <Link to="/products">
             <Button className="w-full sm:w-auto gradient-turquoise hover:scale-105 transition-all duration-300 shadow-turquoise text-white font-semibold px-8 py-3 text-lg">
               Explore Products
