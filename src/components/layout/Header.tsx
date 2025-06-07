@@ -61,27 +61,27 @@ const Header = () => {
       subcategories: [
         {
           title: "Fixed Deposit / Recurring Deposit (FD / RD)",
-          path: "/health-insurance",
+          path: "/fixed-deposits",
           items: [ ]
         },
         {
           title: "Child Education Plans",
-          path: "/kids_education",
+          path: "/child-education",
           items: [ ]
         },
         {
           title: "Retirement Plans",
-          path: "/Retirement Plans",
+          path: "/retirement-plans",
           items: [ ]
         },
         {
           title: "Wealth Creation",
-          path: "/Wealth Creation",
+          path: "/wealth-creation",
           items: [ ]
         },
         {
           title: "Security Bonds",
-          path: "/security bond",
+          path: "/security-bonds",
           items: [ ]
         }
         
@@ -93,27 +93,22 @@ const Header = () => {
       subcategories: [
         {
           title: "Housing Loan",
-          path: "/",
+          path: "/housing-loan",
           items: []
         },
         {
           title: "Personal Loan",
-          path: "/",
-          items: []
-        },
-        {
-          title: "Mortgage Loan",
-          path: "/",
+          path: "/personal-loan",
           items: []
         },
         {
           title: "Business Loan",
-          path: "/",
+          path: "/business-loan",
           items: []
         },
         {
           title: "Credit Cards",
-          path: "/",
+          path: "/credit-cards",
           items: []
         }
       ]

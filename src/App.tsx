@@ -39,6 +39,7 @@ const App = () => (
             <Route path="/term-insurance" element={<TermInsurance />} />
             <Route path="/health-insurance" element={<HealthInsurance />} />
             <Route path="/vehicle-insurance" element={<VehicleInsurance />} />
+            <Route path="/motor-insurance" element={<VehicleInsurance />} />
             <Route path="/fixed-deposits" element={<FixedDeposits />} />
             <Route path="/mutual-funds" element={<MutualFunds />} />
             <Route path="/return-of-premium" element={<ReturnOfPremium />} />
@@ -47,6 +48,14 @@ const App = () => (
             <Route path="/savings" element={<Savings />} />
             <Route path="/loans" element={<Loans />} />
             <Route path="/credit-cards" element={<CreditCards />} />
+            <Route path="/kids_education" element={<ChildEducation />} />
+            <Route path="/child-education" element={<ChildEducation />} />
+            <Route path="/retirement-plans" element={<RetirementPlans />} />
+            <Route path="/wealth-creation" element={<WealthCreation />} />
+            <Route path="/security-bonds" element={<SecurityBonds />} />
+            <Route path="/housing-loan" element={<HousingLoan />} />
+            <Route path="/personal-loan" element={<PersonalLoan />} />
+            <Route path="/business-loan" element={<BusinessLoan />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>
