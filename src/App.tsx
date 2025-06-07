@@ -21,6 +21,13 @@ import GeneralInsurance from "@/pages/GeneralInsurance";
 import Savings from "@/pages/Savings";
 import Loans from "@/pages/Loans";
 import CreditCards from "@/pages/CreditCards";
+import ChildEducation from "@/pages/ChildEducation";
+import RetirementPlans from "@/pages/RetirementPlans";
+import WealthCreation from "@/pages/WealthCreation";
+import SecurityBonds from "@/pages/SecurityBonds";
+import HousingLoan from "@/pages/HousingLoan";
+import PersonalLoan from "@/pages/PersonalLoan";
+import BusinessLoan from "@/pages/BusinessLoan";
 
 const queryClient = new QueryClient();
 
