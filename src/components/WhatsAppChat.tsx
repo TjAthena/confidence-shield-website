@@ -18,7 +18,7 @@ const WhatsAppChat = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 animate-pulse hover:animate-none"
+          className="w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full shadow-lg flex items-center justify-center transition-all duration-300"
           aria-label="WhatsApp Chat"
         >
           <MessageCircle className="w-8 h-8 text-white" />
