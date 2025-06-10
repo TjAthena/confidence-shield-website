@@ -64,6 +64,11 @@ const Header = () => {
           path: "/fixed-deposits",
           items: [ ]
         },
+         {
+          title: "Mutual Funds",
+          path: "/mutual-funds",
+          items: [ ]
+        },
         {
           title: "Child Education Plans",
           path: "/child-education",
