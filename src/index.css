@@ -92,7 +92,7 @@
 
   html {
     scroll-behavior: smooth;
-    font-size: 17px; /* Make base font size smaller */
+    font-size: 15px; /* Make base font size smaller */
   }
 
   body {

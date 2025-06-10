@@ -8,21 +8,22 @@ const Footer = () => {
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-32 h-32 bg-turquoise-light rounded-full blur-xl animate-float"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-turquoise-medium rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-turquoise-pale rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-turquoise-medium rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-turquoise-pale rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
       </div>
-      
+
       <div className="container px-4 py-16 mx-auto relative z-10">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2">
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <Sparkles className="w-7 h-7 text-turquoise-light" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold glow-effect">Confidence</h3>
-                <h3 className="text-xl font-bold text-turquoise-light">Financial</h3>
-              </div>
+              <Link to="/" className="flex items-center space-x-2 group">
+                <img
+                  style={{ width: '100px', height: '100px' }}
+                  src="/lovable-uploads/6c404703-9ca2-4fa0-891a-ad4b2a8ec18c.png"
+                  alt="Confidence Financial Services"
+                  className="group-hover:scale-110 transition-transform duration-300"
+                />
+              </Link>
             </div>
             <p className="text-turquoise-light/90 leading-relaxed mb-6">
               Providing reliable financial protection and security solutions for individuals and families across Tamil Nadu.
@@ -32,7 +33,7 @@ const Footer = () => {
               <span className="text-sm">Chennai, Tamil Nadu</span>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-xl font-semibold mb-6 text-turquoise-light glow-effect">Our Products</h4>
             <ul className="space-y-3">
@@ -62,7 +63,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-xl font-semibold mb-6 text-turquoise-light glow-effect">Quick Links</h4>
             <ul className="space-y-3">
@@ -92,7 +93,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-xl font-semibold mb-6 text-turquoise-light glow-effect">Contact Info</h4>
             <div className="space-y-4">
@@ -120,7 +121,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="pt-8 mt-12 border-t border-white/20">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-turquoise-light/80 text-center md:text-left">
