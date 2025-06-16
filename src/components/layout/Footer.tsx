@@ -86,6 +86,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/partners" className="text-white/80 hover:text-turquoise-light transition-colors duration-300 flex items-center space-x-2 group">
+                  <span className="w-1.5 h-1.5 bg-turquoise-light rounded-full group-hover:scale-150 transition-transform duration-300"></span>
+                  <span>Our Partners</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="text-white/80 hover:text-turquoise-light transition-colors duration-300 flex items-center space-x-2 group">
                   <span className="w-1.5 h-1.5 bg-turquoise-light rounded-full group-hover:scale-150 transition-transform duration-300"></span>
                   <span>Contact Us</span>

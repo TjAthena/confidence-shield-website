@@ -8,6 +8,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Products from "@/pages/Products";
+import Partners from "@/pages/Partners";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/NotFound";
 import TermInsurance from "@/pages/TermInsurance";
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/partners" element={<Partners />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/term-insurance" element={<TermInsurance />} />
             <Route path="/health-insurance" element={<HealthInsurance />} />
