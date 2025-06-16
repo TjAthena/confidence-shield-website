@@ -125,10 +125,10 @@ const Header = () => {
       <div className="container flex items-center justify-between h-25 px-4 mx-auto">
         <Link to="/" className="flex items-center space-x-2 group">
           <img 
-          style={{ width: '100px', height: '100px' }}
-            src="/lovable-uploads/6c404703-9ca2-4fa0-891a-ad4b2a8ec18c.png" 
+          style={{ width: 'auto', height: '85px' }}
+            src="/lovable-uploads/logo.png" 
             alt="Confidence Financial Services" 
-            className="group-hover:scale-110 transition-transform duration-300"
+            className=""
           />
         </Link>
 
