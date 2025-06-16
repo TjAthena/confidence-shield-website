@@ -6,27 +6,27 @@ const WhyChooseUs = () => {
     {
       title: "One of the best Prices",
       subtitle: "Guaranteed",
-      image: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      image: "/assets/icons/the_best.png"
     },
     {
       title: "Unbiased Advice",
       subtitle: "Keeping customers first",
-      image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      image: "/assets/icons/un_bias.png"
     },
     {
       title: "100% Reliable",
       subtitle: "Regulated by IRDAI",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      image: "/assets/icons/real.png"
     },
     {
       title: "Claims Support",
       subtitle: "Made stress-free",
-      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      image: "/assets/icons/support.png"
     },
     {
       title: "Happy to Help",
       subtitle: "Every day of the week",
-      image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      image: "/assets/icons/care.png"
     }
   ];
 
@@ -54,13 +54,13 @@ const WhyChooseUs = () => {
               className="text-center group hover:scale-105 transition-all duration-300"
             >
               <div className="relative mb-6">
-                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden shadow-turquoise">
+                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden">
                   <img 
                     src={feature.image} 
                     alt={feature.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-turquoise-dark/20 to-transparent"></div>
+                  <div className=""></div>
                 </div>
               </div>
               <h3 className="text-lg font-bold text-turquoise-dark mb-2">
